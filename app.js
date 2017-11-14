@@ -5,10 +5,13 @@ const express = require('express');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const mysql = require('mysql');
+const passport = require('passport');
 const path = require('path');
+const session = require('express-session');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const login = require('./routes/login');
 const api = require('./routes/api');
 
 const app = express();
@@ -29,13 +32,19 @@ app.set('view engine', 'ect');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/login', login);
 app.use('/api', api);
+
+// configure passport
+require('./config/passport')(app);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
