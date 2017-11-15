@@ -1,17 +1,18 @@
 const passport = require('passport');
+const User = require('../models/user.model');
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user._id);
   });
   
   passport.deserializeUser((id, done) => {
-    /*db.User.findById(id).then((user) => {
+    User.findById(id).then((user) => {
+      console.debug(user);
       done(null, user);
     }, (err) => {
       done(err, null);
-    });*/
-    done(null, {id}); // for test
+    });
   });
 
   passport.use(require('./passport/local'));

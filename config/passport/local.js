@@ -1,22 +1,26 @@
+const crypto = require('crypto');
 const LocalStrategy = require('passport-local').Strategy;
+const User = require('../../models/user.model');
+
+const secretKey = 'testtt';
+const getHash = (target) => {
+  const sha = crypto.createHmac('sha256', secretKey);
+  sha.update(target);
+  return sha.digest('hex');
+};
 
 module.exports = new LocalStrategy((username, password, done) => {
-  var user = {id: 'test', username: 'testuser', password: 't3stUs3r'};
-
-  if(username === user.username && password === user.password) {
-    return done(null, user);
-  }else {
-    return done(null, false, {message: 'ログインに失敗しました。'});
-  }
-  /*User.findOne({ username: username }, (err, user) => {
-    if (err) { return done(err); }
-    if (!user) {
-      return done(null, false, { message: 'ユーザーIDが正しくありません。' });
-    }
-    if (!user.validPassword(password)) {
-      return done(null, false, { message: 'パスワードが正しくありません。' });
-    }
-    return done(null, user);
-  });*/
+  process.nextTick(()=> {
+    User.findOne({ username }, (err, user) => {
+      if (err) { return done(err); }
+      if(!user) {
+        return done(null, false, {message: "ユーザーが見つかりませんでした。"});
+      }
+      const hashedPassword = getHash(password);
+      if(user.password !== hashedPassword) {
+        return done(null, false, {message: "パスワードが間違っています。"});
+      }
+      return done(null, user);
+    });
+  });
 });
-

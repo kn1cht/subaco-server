@@ -9,10 +9,9 @@ router.get('/', (req, res, next) => {
 router.post('/', 
   passport.authenticate('local', {
     failureRedirect: '/login',
-    failureFlash: false,
-    session: false
+    failureFlash: true
   }), (req, res) => {
-    res.redirect('/');
+    res.redirect('/dashboard');
   });
 
 module.exports = router;
