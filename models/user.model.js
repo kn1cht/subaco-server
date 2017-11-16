@@ -19,6 +19,6 @@ const UserSchema = new Schema({
 });
 
 mongoose.Promise = global.Promise; // set global Promise
-mongoose.connect('mongodb://localhost/subaco', { useMongoClient : true });
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/subaco', { useMongoClient : true });
 
 module.exports = mongoose.model('User', UserSchema);

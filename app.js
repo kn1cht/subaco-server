@@ -1,3 +1,5 @@
+'use strict';
+
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const ECT = require('ect');
@@ -6,12 +8,15 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const passport = require('passport');
 const path = require('path');
-const session = require('express-session');
-
 const routes = require('./routes');
+const session = require('express-session');
 
 const app = express();
 const ectRenderer = ECT({ watch: true, root: __dirname + '/views', ext : '.ect' });
+
+require('dotenv').config({
+  path : 'config/env/.env.' + app.get('env')
+});
 
 /*** view engine setup ***/
 app.engine('ect', ectRenderer.render);
@@ -27,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /*** configure session and passport ***/
 app.use(session({
-  secret            : 'keyboard cat',
+  secret            : process.env.SESSION_SECRET || '',
   resave            : false,
   saveUninitialized : true,
   /* cookie          : { secure: true } // Need https */
@@ -35,7 +40,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport')(app);
-
 
 /*** routing ***/
 app.use('/', routes.top);

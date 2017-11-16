@@ -2,9 +2,14 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  res.render('login', { title: 'Login' });
-});
+router.get('/',
+  (req, res, next) => {
+    if(!req.isAuthenticated()) { return next(); }
+    res.redirect('../dashboard');
+  }, (req, res, next) => {
+    res.render('login', { title: 'Login' });
+  }
+);
 
 router.post('/', 
   passport.authenticate('local', {
