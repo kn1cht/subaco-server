@@ -43,7 +43,7 @@ app.use(session({
     maxAge: 7 * 24 * 60 * 60 * 1000,
     //secure: true // Need https
   },
-  store             : new mongoStore({
+  store             : new sessionStore({
     mongooseConnection : mongoose.connection
   })
 }));
