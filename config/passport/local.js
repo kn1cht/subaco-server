@@ -8,18 +8,15 @@ const getHash = (target) => {
   return sha.digest('hex');
 };
 
-module.exports = new LocalStrategy((username, password, done) => {
-  process.nextTick(()=> {
-    User.findOne({ username }, (err, user) => {
-      if (err) { return done(err); }
-      if(!user) {
-        return done(null, false, { message : "ユーザーが見つかりませんでした。" });
-      }
-      const hashedPassword = getHash(password);
-      if(user.password !== hashedPassword) {
-        return done(null, false, { message : "パスワードが間違っています。" });
-      }
-      return done(null, user);
-    });
+module.exports = new LocalStrategy(async(username, password, done) => {
+  const user = await User.findOne({ username }).catch((err) => { 
+    console.error(err); 
   });
+  if(!user) {
+    return done(null, false, { message : "ユーザーが見つかりませんでした。" });
+  }
+  if(user.password !== getHash(password)) {
+    return done(null, false, { message : "パスワードが間違っています。" });
+  }
+  return done(null, user);
 });

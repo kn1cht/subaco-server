@@ -56,6 +56,10 @@ app.use('/', routes.top);
 app.use('/api', routes.api);
 app.use('/dashboard', routes.dashboard);
 app.use('/login', routes.login);
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
