@@ -10,12 +10,18 @@ router.get('/',
     if(req.isAuthenticated()) { return next(); }
     res.redirect('../login');
   }, async(req, res, next) => {
-    const charge = await Charge.find({}).catch((err) => { 
-      console.error(err); 
-    });
-    console.log(charge);
-
     res.render('dashboard', { title: 'Dashboard', username : req.user.username });
+  }
+);
+
+router.get('/chargelist',
+  (req, res, next) => {
+    if(req.isAuthenticated()) { return next(); }
+    res.redirect('../login');
+  }, async(req, res) => {
+    const charge = await Charge.find({}).catch((err) => { console.error(err); });
+    res.header('Content-Type', 'application/json; charset=utf-8');
+    res.send(charge);
   }
 );
 

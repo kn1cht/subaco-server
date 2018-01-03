@@ -13,12 +13,14 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res) => {
   /*
   {
-    token
-    ts
-    current
-    from_device
-    to_device
-    to_device_sn
+    token,
+    ts,
+    current,
+    toDevice {
+      name,
+      manufacturer,
+      serialNum
+    },
     type : [start, continue, end]
   }
   */
