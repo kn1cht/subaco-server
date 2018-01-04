@@ -8,15 +8,15 @@ const ChargeSchema = new Schema({
     type : Number,
     min  : 0
   },
-  capacity   : {
+  capacity : {
     type : Number,
     min  : 0
   },
-  user_id    : { 
+  user_id : { 
     type : Schema.Types.ObjectId, 
     ref  : 'User' 
   },
-  device_id  : { 
+  device_id : { 
     type : Schema.Types.ObjectId, 
     ref  : 'Device' 
   },

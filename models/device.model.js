@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 const DeviceSchema = new Schema({
   device_name   : String,
   device_serial : String,
-  last_charge    : Date,
-  user_id        : { 
+  last_charge   : Date,
+  user_id       : { 
     type : Schema.Types.ObjectId, 
     ref  : 'User' 
   },
-  alert_enabled  : {
+  alert_enabled : {
     type    : Boolean,
     default : false
   }

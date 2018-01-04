@@ -13,10 +13,10 @@ module.exports = new LocalStrategy(async(username, password, done) => {
     console.error(err); 
   });
   if(!user) {
-    return done(null, false, { message : "ユーザーが見つかりませんでした。" });
+    return done(null, false, { message : 'ユーザーが見つかりませんでした。' });
   }
   if(user.password !== getHash(password)) {
-    return done(null, false, { message : "パスワードが間違っています。" });
+    return done(null, false, { message : 'パスワードが間違っています。' });
   }
   return done(null, user);
 });

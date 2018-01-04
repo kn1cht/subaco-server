@@ -9,10 +9,10 @@ const UserSchema = new Schema({
   email : {
     type      : String,
     lowercase : true,
-    unique : true
+    unique    : true
   },
   password : String,
-  admin : {
+  admin    : {
     type    : Boolean,
     default : false
   }

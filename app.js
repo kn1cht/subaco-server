@@ -13,7 +13,7 @@ const routes = require('./routes');
 const session = require('express-session');
 
 const app = express();
-const ectRenderer = ECT({ watch: true, root: __dirname + '/views', ext : '.ect' });
+const ectRenderer = ECT({ watch : true, root : __dirname + '/views', ext : '.ect' });
 const sessionStore = require('connect-mongo')(session);
 
 require('dotenv').config({
@@ -25,25 +25,26 @@ app.engine('ect', ectRenderer.render);
 app.set('view engine', 'ect');
 app.set('x-powered-by', false);
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended : true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 /*** configure session and passport ***/
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/subaco', { useMongoClient : true });
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/subaco', { 
+  useMongoClient : true 
+});
 app.use(session({
   secret            : process.env.SESSION_SECRET || '',
   resave            : false,
   saveUninitialized : false,
   cookie            : {
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    //secure: true // Need https
+    maxAge : 7 * 24 * 60 * 60 * 1000,
+    //secure : true // Need https
   },
-  store             : new sessionStore({
+  store : new sessionStore({
     mongooseConnection : mongoose.connection
   })
 }));
@@ -69,7 +70,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.title = err.message;
   res.locals.message = err.message;

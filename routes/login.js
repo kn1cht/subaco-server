@@ -6,15 +6,15 @@ router.get('/',
   (req, res, next) => {
     if(!req.isAuthenticated()) { return next(); }
     res.redirect('../dashboard');
-  }, (req, res, next) => {
-    res.render('login', { title: 'Login' });
+  }, (req, res) => {
+    res.render('login', { title : 'Login' });
   }
 );
 
 router.post('/', 
   passport.authenticate('local', {
-    failureRedirect: '/login',
-    failureFlash: true
+    failureRedirect : '/login',
+    failureFlash    : true
   }), (req, res) => {
     res.redirect('/dashboard');
   });

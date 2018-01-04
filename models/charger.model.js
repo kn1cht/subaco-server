@@ -11,7 +11,7 @@ const ChargerSchema = new Schema({
     type : Schema.Types.ObjectId, 
     ref  : 'User' 
   },
-  alert_enabled  : {
+  alert_enabled : {
     type    : Boolean,
     default : false
   }

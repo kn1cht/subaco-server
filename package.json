@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "build": "webpack"
+    "build": "webpack",
+    "test": "npm run lint",
+    "lint": "eslint ."
   },
   "dependencies": {
     "body-parser": "~1.17.1",

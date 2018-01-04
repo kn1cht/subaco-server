@@ -16,4 +16,4 @@ module.exports = () => {
   });
 
   passport.use(require('./passport/local'));
-}
+};
