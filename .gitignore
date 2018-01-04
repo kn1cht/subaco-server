@@ -4,5 +4,6 @@
 node_modules/*
 coverage/*
 note/*
-bower_components
-bundle.js
+public/fonts
+public/javascripts
+public/stylesheets/bootstrap.css

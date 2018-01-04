@@ -2,6 +2,7 @@
 
 const Vue = require('vue');
 const ChargeList = require('./chargelist.vue').default;
+require('bootstrap/dist/js/bootstrap.min.js');
 
 window.onload = () => {
   new Vue({
