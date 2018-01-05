@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
   if(req.isAuthenticated()) { return next(); }
   res.redirect('../login');
 }, async(req, res) => {
-  res.render('dashboard', { title : 'Dashboard', username : req.user.username });
+  res.render('dashboard', { title : 'ダッシュボード', username : req.user.username });
 });
 
 router.get('/charge.list', (req, res, next) => {

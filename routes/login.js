@@ -7,7 +7,7 @@ router.get('/',
     if(!req.isAuthenticated()) { return next(); }
     res.redirect('../dashboard');
   }, (req, res) => {
-    res.render('login', { title : 'Login' });
+    res.render('login', { title : 'ログイン' });
   }
 );
 

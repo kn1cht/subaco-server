@@ -1,32 +1,31 @@
 <% extend 'layout' %>
 
 <div class="page-header">
-  <h1>ダッシュボード</h1>
+  <h1><%= @title %></h1>
   <p> <%= @username %>さん </p>
 </div>
 
 <div class="row">
   <div class="col-sm-6">
-    <div class="panel panel-default">
+    <div class="panel panel-info">
       <div class="panel-heading">
-        <h3>充電器情報</h3>
+        <h4><i class="fa fa-fw fa-battery-full" aria-hidden="true"></i> 充電器情報</h4>
       </div>
       <div id="charger-list" class="panel-body"></div>
     </div>
   </div>
   <div class="col-sm-6">
-    <div class="panel panel-default">
+    <div class="panel panel-info">
       <div class="panel-heading">
-        <h3>端末情報</h3>
+        <h4><i class="fa fa-fw fa-mobile" aria-hidden="true"></i>端末情報</h4>
       </div>
       <div id="device-list" class="panel-body"></div>
     </div>
   </div>
 </div>
-
-<div  class="panel panel-default">
+<div  class="panel panel-info">
   <div class="panel-heading">
-    <h3>充電履歴</h3>
+    <h4><i class="fa fa-fw fa-history" aria-hidden="true"></i>充電履歴</h4>
   </div>
   <div id="charge-list" class="panel-body"></div>
 </div>

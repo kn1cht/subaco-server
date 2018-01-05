@@ -32,11 +32,12 @@ const app = {
 
 const bootstrap = {
   entry : [
-    `${__dirname}/node_modules/bootstrap/dist/css/bootstrap.min.css`
+    `${__dirname}/node_modules/bootstrap/dist/css/bootstrap.min.css`,
+    `${__dirname}/node_modules//font-awesome/css/font-awesome.css`,
   ],
   output : {
     path     : `${__dirname}/public/stylesheets`,
-    filename : 'bootstrap.css'
+    filename : 'bundle.css'
   },
   module : {
     loaders : [
@@ -51,7 +52,7 @@ const bootstrap = {
     ]
   },
   plugins : [
-    new ExtractTextPlugin('../stylesheets/bootstrap.css')
+    new ExtractTextPlugin('../stylesheets/bundle.css')
   ]
 };
 
