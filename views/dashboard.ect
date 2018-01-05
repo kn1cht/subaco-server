@@ -1,7 +1,32 @@
 <% extend 'layout' %>
-<h1><%= @title %></h1>
-<p> welcome <%= @username %>!</p>
 
-<div id="charge-list">
-  <chargeList></chargeList>
+<div class="page-header">
+  <h1>ダッシュボード</h1>
+  <p> <%= @username %>さん </p>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>充電器情報</h3>
+      </div>
+      <div id="charger-list" class="panel-body"></div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>端末情報</h3>
+      </div>
+      <div id="device-list" class="panel-body"></div>
+    </div>
+  </div>
+</div>
+
+<div  class="panel panel-default">
+  <div class="panel-heading">
+    <h3>充電履歴</h3>
+  </div>
+  <div id="charge-list" class="panel-body"></div>
 </div>

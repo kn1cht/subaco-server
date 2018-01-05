@@ -15,12 +15,12 @@ const app = {
       }
     ]
   },
-  plugins: [
+  plugins : [
     new webpack.ProvidePlugin({
-      $              : 'jquery',
-      jQuery         : 'jquery',
-      'window.jQuery': 'jquery',
-      Popper         : ['popper.js', 'default'],
+      $               : 'jquery',
+      jQuery          : 'jquery',
+      'window.jQuery' : 'jquery',
+      Popper          : ['popper.js', 'default'],
     })
   ],
   resolve : {
@@ -31,26 +31,26 @@ const app = {
 };
 
 const bootstrap = {
-  entry:[
-    `${__dirname}/node_modules/bootstrap/dist/css/bootstrap.css`
+  entry : [
+    `${__dirname}/node_modules/bootstrap/dist/css/bootstrap.min.css`
   ],
-  output: {
-      path: `${__dirname}/public/stylesheets`,
-      filename: 'bootstrap.css'
+  output : {
+    path     : `${__dirname}/public/stylesheets`,
+    filename : 'bootstrap.css'
   },
-  module: {
-    loaders: [
+  module : {
+    loaders : [
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('css-loader')
+        test   : /\.css$/,
+        loader : ExtractTextPlugin.extract('css-loader')
       },
       {
-        test: /\.(woff|woff2|eot|ttf|svg)$/,
-        loader: 'file-loader?name=../fonts/[name].[ext]'
+        test   : /\.(woff|woff2|eot|ttf|svg)$/,
+        loader : 'file-loader?name=../fonts/[name].[ext]'
       }
     ]
   },
-  plugins: [
+  plugins : [
     new ExtractTextPlugin('../stylesheets/bootstrap.css')
   ]
 };
