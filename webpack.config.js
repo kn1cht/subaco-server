@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 const webpack = require('webpack');
 
 const app = {
@@ -16,6 +17,8 @@ const app = {
     ]
   },
   plugins : [
+    new webpack.optimize.OccurrenceOrderPlugin(true),
+    new UglifyEsPlugin({ output : { comments : require('uglify-save-license') } }),
     new webpack.ProvidePlugin({
       $               : 'jquery',
       jQuery          : 'jquery',
@@ -25,7 +28,9 @@ const app = {
   ],
   resolve : {
     alias : {
-      vue : 'vue/dist/vue.common.js'
+      bootstrap : 'bootstrap/dist/js/bootstrap.min.js',
+      jquery    : 'jquery/dist/jquery.min.js',
+      vue       : 'vue/dist/vue.min.js'
     }
   }
 };
@@ -33,7 +38,7 @@ const app = {
 const bootstrap = {
   entry : [
     `${__dirname}/node_modules/bootstrap/dist/css/bootstrap.min.css`,
-    `${__dirname}/node_modules//font-awesome/css/font-awesome.css`,
+    `${__dirname}/node_modules//font-awesome/css/font-awesome.min.css`,
   ],
   output : {
     path     : `${__dirname}/public/stylesheets`,

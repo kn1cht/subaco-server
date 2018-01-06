@@ -34,6 +34,8 @@
     "jquery": "^3.2.1",
     "popper.js": "^1.12.9",
     "source-map-loader": "^0.2.3",
+    "uglify-es-webpack-plugin": "^0.10.0",
+    "uglify-save-license": "^0.4.1",
     "vue": "^2.5.13",
     "vue-loader": "^13.6.2",
     "vue-template-compiler": "^2.5.13",

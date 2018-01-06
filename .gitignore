@@ -4,6 +4,4 @@
 node_modules/*
 coverage/*
 note/*
-public/fonts
-public/javascripts
-public/stylesheets/bootstrap.css
+public/*
