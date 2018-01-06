@@ -3,10 +3,12 @@ const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 const webpack = require('webpack');
 
 const app = {
-  entry  : './views/main.js',
+  entry  : { main : './views/main.js'} ,
   output : {
-    path     : `${__dirname}/public/javascripts`,
-    filename : 'bundle.js'
+    path         : `${__dirname}/public/javascripts`,
+    filename     : 'bundle.js',
+    chunkFilename: '[name].chunk.js',
+    publicPath   : `javascripts/`
   },
   module : {
     rules : [
@@ -17,6 +19,7 @@ const app = {
     ]
   },
   plugins : [
+    new webpack.optimize.CommonsChunkPlugin({ name : 'main', filename : 'common.js' }),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new UglifyEsPlugin({ output : { comments : require('uglify-save-license') } }),
     new webpack.ProvidePlugin({

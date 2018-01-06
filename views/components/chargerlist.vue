@@ -47,9 +47,8 @@ export default {
     }
   },
 	async created() {
-		let res = await axios.get('/dashboard/charger.list');
+		let res = await axios.get('/api/charger.list');
     this.items = res.data;
-    console.log(this.items);
   }
 }
 </script>

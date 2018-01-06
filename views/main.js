@@ -1,22 +1,50 @@
 /*** Webpack build entry point ***/
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import App from './app.vue';
+import axios from 'axios';
+const Top = () => import(/* webpackChunkName: "top"*/ './routes/top.vue');
+const Login = () => import(/* webpackChunkName: "login"*/ './routes/login.vue');
+const Dashboard = () => import(/* webpackChunkName: "dashboard"*/ './routes/dashboard.vue');
+import 'bootstrap';
 
-const Vue = require('vue');
-const ChargeList = require('./chargelist.vue').default;
-const ChargerList = require('./chargerlist.vue').default;
-const DeviceList = require('./devicelist.vue').default;
-require('bootstrap');
+Vue.use(VueRouter);
 
 window.onload = () => {
-  new Vue({
-    el     : '#charge-list',
-    render : createElement => createElement(ChargeList)
+  const router = new VueRouter({
+    routes : [
+      { path : '/', component : Top },
+      {
+        path : '/login', 
+        component : Login,
+        beforeEnter: async(to, from, next) => {
+          const res = await axios.get('api/user.isAuthed');
+          if (res.data.ok === false) {
+            next();
+          } else {
+            next({ path : '/dashboard' });
+          }
+        }
+      },
+      {
+        path : '/dashboard', 
+        component : Dashboard,
+        beforeEnter: async(to, from, next) => {
+          const res = await axios.get('api/user.isAuthed');
+          if (res.data.ok === true) {
+            next();
+          } else {
+            next({ path : '/login' });
+          }
+        }
+      },
+      //{ path: '*', component: NotFound }
+    ]
   });
-  new Vue({
-    el     : '#charger-list',
-    render : createElement => createElement(ChargerList)
+  
+  new Vue({ 
+    el : '#app', 
+    router,
+    render : createElement => createElement(App)
   });
-  new Vue({
-    el     : '#device-list',
-    render : createElement => createElement(DeviceList)
-  });
-};
+}

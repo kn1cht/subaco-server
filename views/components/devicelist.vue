@@ -43,9 +43,8 @@ export default {
     }
   },
 	async created() {
-		let res = await axios.get('/dashboard/device.list');
+		let res = await axios.get('/api/device.list');
     this.items = res.data;
-    console.log(this.items);
   }
 }
 </script>
