@@ -12,7 +12,6 @@ const passport = require('passport');
 const path = require('path');
 const session = require('express-session');
 const sessionStore = require('connect-mongo')(session);
-const VueRouter = require('vue-router');
 
 const api = require('./routes/api');
 const login = require('./routes/login');

@@ -3,12 +3,12 @@ const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 const webpack = require('webpack');
 
 const app = {
-  entry  : { main : './views/main.js'} ,
+  entry  : { main : './views/main.js'},
   output : {
-    path         : `${__dirname}/public/javascripts`,
-    filename     : 'bundle.js',
-    chunkFilename: '[name].chunk.js',
-    publicPath   : `javascripts/`
+    path          : `${__dirname}/public/javascripts`,
+    filename      : 'bundle.js',
+    chunkFilename : '[name].chunk.js',
+    publicPath    : 'javascripts/'
   },
   module : {
     rules : [
@@ -35,7 +35,8 @@ const app = {
       jquery    : 'jquery/dist/jquery.min.js',
       vue       : 'vue/dist/vue.min.js'
     }
-  }
+  },
+  cache : true
 };
 
 const bootstrap = {
@@ -61,7 +62,8 @@ const bootstrap = {
   },
   plugins : [
     new ExtractTextPlugin('../stylesheets/bundle.css')
-  ]
+  ],
+  cache : true
 };
 
 module.exports = [app, bootstrap];

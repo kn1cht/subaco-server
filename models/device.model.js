@@ -2,17 +2,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const DeviceSchema = new Schema({
-  device_name   : String,
-  device_serial : String,
-  last_charge   : Date,
-  user_id       : { 
+  name        : String,
+  serial      : String,
+  last_charge : Date,
+  user_id     : { 
     type : Schema.Types.ObjectId, 
     ref  : 'User' 
   },
   alert_enabled : {
     type    : Boolean,
-    default : false
+    default : true
   }
+}, {
+  timestamps : { createdAt : 'created_at' } 
 });
 
 mongoose.Promise = global.Promise; // set global Promise

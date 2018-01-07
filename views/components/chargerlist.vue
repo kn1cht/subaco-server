@@ -11,10 +11,10 @@
     </thead>
     <tbody>
       <tr v-for="item in items" :key="item._id">
-        <td>{{ item.charger_name }}</td>
+        <td>{{ item.name }}</td>
         <td>{{ getTerm(item.last_charge) }}</td>
         <td>{{ getTerm(item.last_discharge) }}</td>
-        <td>{{ `${item.charger_soc}%` }}</td>
+        <td>{{ `${item.soc}%` }}</td>
         <td>{{ item.alert_enabled ? 'オン' : 'オフ' }}</td>
       </tr>
     </tbody>

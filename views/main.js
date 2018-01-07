@@ -15,9 +15,9 @@ window.onload = () => {
     routes : [
       { path : '/', component : Top },
       {
-        path : '/login', 
-        component : Login,
-        beforeEnter: async(to, from, next) => {
+        path        : '/login', 
+        component   : Login,
+        beforeEnter : async(to, from, next) => {
           const res = await axios.get('api/user.isAuthed');
           if (res.data.ok === false) {
             next();
@@ -27,9 +27,9 @@ window.onload = () => {
         }
       },
       {
-        path : '/dashboard', 
-        component : Dashboard,
-        beforeEnter: async(to, from, next) => {
+        path        : '/dashboard', 
+        component   : Dashboard,
+        beforeEnter : async(to, from, next) => {
           const res = await axios.get('api/user.isAuthed');
           if (res.data.ok === true) {
             next();
@@ -43,8 +43,8 @@ window.onload = () => {
   });
   
   new Vue({ 
-    el : '#app', 
+    el     : '#app', 
     router,
     render : createElement => createElement(App)
   });
-}
+};

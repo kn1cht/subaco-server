@@ -1,8 +1,7 @@
 <template>
   <section>
     <div class="page-header">
-      <h1>ダッシュボード</h1>
-      <p> usernameさん </p>
+      <user-name></user-name>
     </div>
 
     <div class="row">
@@ -36,12 +35,14 @@
 import ChargeList from '../components/chargelist.vue';
 import ChargerList from '../components/chargerlist.vue';
 import DeviceList from '../components/devicelist.vue';
+import UserName from '../components/username.vue';
 
 export default {
   components : {
     'charge-list' : ChargeList,
     'charger-list' : ChargerList, 
-    'device-list' : DeviceList
+    'device-list' : DeviceList,
+    'user-name' : UserName
   }
 }
 </script>

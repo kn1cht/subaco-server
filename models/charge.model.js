@@ -2,25 +2,33 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ChargeSchema = new Schema({
-  start_time : Date,
-  end_time   : Date,
-  current    : {
+  start_time : {
+    type     : Date,
+    required : true
+  },
+  update_time : Date,
+  current     : {
     type : Number,
     min  : 0
   },
   capacity : {
-    type : Number,
-    min  : 0
+    type    : Number,
+    default : 0,
+    min     : 0
   },
   user_id : { 
     type : Schema.Types.ObjectId, 
     ref  : 'User' 
   },
-  device_id : { 
+  device_id : {
     type : Schema.Types.ObjectId, 
     ref  : 'Device' 
   },
   charger_id : { 
+    type : Schema.Types.ObjectId, 
+    ref  : 'Charger' 
+  },
+  module_id : { 
     type : Schema.Types.ObjectId, 
     ref  : 'Charger' 
   },
@@ -30,6 +38,8 @@ const ChargeSchema = new Schema({
     type    : Boolean,
     default : true
   }
+}, {
+  timestamps : { createdAt : 'created_at' } 
 });
 
 mongoose.Promise = global.Promise; // set global Promise

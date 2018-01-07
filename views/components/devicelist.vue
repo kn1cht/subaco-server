@@ -9,7 +9,7 @@
     </thead>
     <tbody>
       <tr v-for="item in items" :key="item._id">
-        <td>{{ item.device_name }}</td>
+        <td>{{ item.name }}</td>
         <td>{{ getTerm(item.last_charge) }}</td>
         <td>{{ item.alert_enabled ? 'オン' : 'オフ' }}</td>
       </tr>

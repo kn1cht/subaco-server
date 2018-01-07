@@ -4,6 +4,8 @@
     <tr>
       <td>開始</td>
       <td>終了</td>
+      <td>充電器名</td>
+      <td>端末名</td>
       <td>電流(mA)</td>
       <td>容量(mAh)</td>
       <td>状態</td>
@@ -12,9 +14,11 @@
     <tbody>
       <tr v-for="item in items" :key="item._id">
         <td>{{ (new Date(item.start_time)).toFormat('YYYY/MM/DD HH24:MI:SS') }}</td>
-        <td>{{ (new Date(item.end_time)).toFormat('YYYY/MM/DD HH24:MI:SS') }}</td>
-        <td>{{ item.current }}</td>
-        <td>{{ item.capacity }}</td>
+        <td>{{ item.state ? '-' : (new Date(item.update_time)).toFormat('YYYY/MM/DD HH24:MI:SS') }}</td>
+        <td>{{ item.charger_id.name }}</td>
+        <td>{{ item.device_id.name }}</td>
+        <td>{{ item.current.toFixed(2) }}</td>
+        <td>{{ item.capacity.toFixed(2) }}</td>
         <td>{{ getState(item.state) }}</td>
       </tr>
     </tbody>
@@ -33,7 +37,7 @@ export default {
   },
   methods: {
     getState(state) {
-      return state == 1 ? '充電中' : '終了';
+      return state == 0 ? '終了' : '充電中';
     }
   },
 	async created() {
