@@ -11,7 +11,7 @@ const axios = require('axios');
 export default {
   data() { return { authed : false }},
 	async created() {
-    let res = await axios.get('/api/user.isAuthed');
+    let res = await axios.get('/api/user/isAuthed');
     this.authed = res.data.ok;
   }
 }

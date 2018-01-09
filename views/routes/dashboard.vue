@@ -5,7 +5,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-md-6">
         <div class="panel panel-info">
           <div class="panel-heading">
             <h4><i class="fa fa-fw fa-battery-full" aria-hidden="true"></i> 充電器情報</h4>
@@ -13,7 +13,7 @@
           <charger-list class="panel-body"></charger-list>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-md-6">
         <div class="panel panel-info">
           <div class="panel-heading">
             <h4><i class="fa fa-fw fa-mobile" aria-hidden="true"></i>端末情報</h4>

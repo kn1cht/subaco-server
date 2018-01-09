@@ -18,7 +18,7 @@ window.onload = () => {
         path        : '/login', 
         component   : Login,
         beforeEnter : async(to, from, next) => {
-          const res = await axios.get('api/user.isAuthed');
+          const res = await axios.get('api/user/isAuthed');
           if (res.data.ok === false) {
             next();
           } else {
@@ -30,7 +30,7 @@ window.onload = () => {
         path        : '/dashboard', 
         component   : Dashboard,
         beforeEnter : async(to, from, next) => {
-          const res = await axios.get('api/user.isAuthed');
+          const res = await axios.get('api/user/isAuthed');
           if (res.data.ok === true) {
             next();
           } else {

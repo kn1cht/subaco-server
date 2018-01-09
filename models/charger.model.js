@@ -5,7 +5,8 @@ const ChargerSchema = new Schema({
   name           : String,
   last_charge    : Date,
   last_discharge : Date,
-  soc            : Number,
+  residual       : Number, // mAh
+  capacity       : Number, // mAh
   user_id        : { 
     type : Schema.Types.ObjectId, 
     ref  : 'User' 

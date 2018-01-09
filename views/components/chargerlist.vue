@@ -6,6 +6,7 @@
       <td>最後の充電</td>
       <td>最後の放電</td>
       <td>推定残量</td>
+      <td>容量(mAh)</td>
       <td>通知</td>
     </tr>
     </thead>
@@ -14,7 +15,8 @@
         <td>{{ item.name }}</td>
         <td>{{ getTerm(item.last_charge) }}</td>
         <td>{{ getTerm(item.last_discharge) }}</td>
-        <td>{{ `${item.soc}%` }}</td>
+        <td>{{ `${(item.residual / item.capacity * 100).toFixed(2)}%` }}</td>
+        <td>{{ item.capacity }}</td>
         <td>{{ item.alert_enabled ? 'オン' : 'オフ' }}</td>
       </tr>
     </tbody>
@@ -47,7 +49,7 @@ export default {
     }
   },
 	async created() {
-		let res = await axios.get('/api/charger.list');
+		let res = await axios.get('/api/charger/list');
     this.items = res.data;
   }
 }

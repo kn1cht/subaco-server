@@ -13,8 +13,6 @@ const path = require('path');
 const session = require('express-session');
 const sessionStore = require('connect-mongo')(session);
 
-const api = require('./routes/api');
-const login = require('./routes/login');
 const app = express();
 const ectRenderer = ECT({ watch : true, root : __dirname + '/views', ext : '.ect' });
 
@@ -61,8 +59,8 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.use('/login', login);
-app.use('/api', api);
+app.use('/api', require('./routes/api'));
+app.use('/login', require('./routes/login'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
