@@ -16,6 +16,17 @@ router.get('/list', (req, res, next) => {
     .catch((err) => { console.error(err); }));
 });
 
+router.get('/delete', async(req, res) => {
+  if(!req.query.id) {
+    res.send({ ok : false, error : 'Please specify id parameter' });
+    return;
+  }
+  await Charge.remove({ _id : req.query.id });
+  
+  res.header('Content-Type', 'application/json; charset=utf-8');
+  res.send({ ok : true });
+});
+
 router.post('/start', async(req, res) => {
   const data = req.body;
 
@@ -23,7 +34,7 @@ router.post('/start', async(req, res) => {
     token : data.token
   }).catch((err) => { console.error(err); });
   if(!subacoModule) {
-    res.send({ ok : false, error : 'wrong token' });
+    res.send({ ok : false, error : 'Wrong token' });
     return;
   }
   const device = await Device.findOneAndUpdate({
@@ -79,6 +90,7 @@ router.post('/append', async(req, res) => {
   const timeFromStart = (new Date(data.ts * 1000) - latestCharge.start_time) / 1000 / 3600;
   const timeFromUpdate = (new Date(data.ts * 1000) - latestCharge.update_time) / 1000 / 3600;
   const capacityDiff = data.current * 5 / 3.6 * timeFromUpdate; // lithium ion battery voltage : 3.6
+  const capacity = latestCharge.capacity + capacityDiff;
   
   const charger = (await Charger.find({
     user_id : subacoModule.user_id
@@ -90,7 +102,7 @@ router.post('/append', async(req, res) => {
   await Charge.update({ _id : latestCharge._id }, {
     $set : {
       current     : capacity / timeFromStart * 3.6 / 5,
-      capacity    : latestCharge.capacity + capacityDiff,
+      capacity,
       state       : data.state,
       update_time : new Date(data.ts * 1000),
     },
