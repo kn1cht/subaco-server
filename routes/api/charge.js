@@ -19,7 +19,7 @@ router.get('/list', (req, res, next) => {
 router.get('/delete', async(req, res) => {
   if(!req.query.id) {
     res.send({ ok : false, error : 'Please specify id parameter' });
-    return;
+    return;1
   }
   await Charge.remove({ _id : req.query.id });
   

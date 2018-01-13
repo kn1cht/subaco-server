@@ -10,7 +10,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <router-link to="/" class="navbar-brand">SUBACO Console</router-link>
+          <router-link to="/" class="navbar-brand">
+            <img src="../static/logotype-small.png" alt="SUBACO logotype">
+          </router-link>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -22,11 +24,21 @@
         </div><!--/.nav-collapse -->
       </div><!--/.container-fluid -->
     </nav>
-    <div class="container">
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
+
+<style scoped>
+  .navbar {
+    margin : 0;
+  }
+  .navbar-brand {
+    padding : 7px;
+  }
+  img {
+    height : 100%;
+  }
+</style>
 
 <script>
 import AuthButton from './components/authbutton.vue';

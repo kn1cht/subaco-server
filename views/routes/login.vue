@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section class="container">
     <form action="/login" method="post" class="col-lg-6">
       <div class="panel panel-info">
         <div class="panel-heading">
@@ -27,5 +27,5 @@
       Id: <b>testuser</b><br>
       Pass: <b>t3stUs3r</b>
     </p>
-  </div>
+  </section>
 </template>

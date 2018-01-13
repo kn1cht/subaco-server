@@ -15,6 +15,10 @@ const app = {
       {
         test   : /\.vue$/,
         loader : 'vue-loader'
+      },
+      {
+        test: /\.(jpg|png)$/,
+        loaders: 'file-loader?name=../images/[name].[ext]'
       }
     ]
   },
@@ -57,6 +61,10 @@ const bootstrap = {
       {
         test   : /\.(woff|woff2|eot|ttf|svg)$/,
         loader : 'file-loader?name=../fonts/[name].[ext]'
+      },
+      {
+        test: /\.(jpg|png)$/,
+        loaders: 'file-loader?name=../images/[name].[ext]'
       }
     ]
   },

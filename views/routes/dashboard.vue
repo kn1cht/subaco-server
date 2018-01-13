@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="container">
     <div class="page-header">
       <user-name></user-name>
     </div>
