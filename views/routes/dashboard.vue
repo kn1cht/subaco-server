@@ -26,7 +26,7 @@
       <div class="panel-heading">
         <h4><i class="fa fa-fw fa-history" aria-hidden="true"></i>充電履歴</h4>
       </div>
-      <charge-list class="panel-body"></charge-list>
+      <charge-list></charge-list>
     </div>
   </section>
 </template>

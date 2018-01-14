@@ -32,9 +32,8 @@ const ChargeSchema = new Schema({
     type : Schema.Types.ObjectId, 
     ref  : 'Charger' 
   },
-  data_count : Number,
-  state      : Number, // 0: end 1: start 2: ongoing
-  enabled    : {
+  state   : Number, // 0: end 1: start 2: ongoing
+  enabled : {
     type    : Boolean,
     default : true
   }

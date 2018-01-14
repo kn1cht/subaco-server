@@ -15,7 +15,7 @@
         <td>{{ item.name }}</td>
         <td>{{ getTerm(item.last_charge) }}</td>
         <td>{{ getTerm(item.last_discharge) }}</td>
-        <td>{{ `${(item.residual / item.capacity * 100).toFixed(2)}%` }}</td>
+        <td>{{ `${soc(item.residual, item.capacity)}%` }}</td>
         <td>{{ item.capacity }}</td>
         <td>{{ item.alert_enabled ? 'オン' : 'オフ' }}</td>
       </tr>
@@ -33,6 +33,10 @@ export default {
     }
   },
   methods: {
+    soc(residual, capacity) {
+      const percentage = residual / capacity * 100;
+      return Math.max( Math.min(percentage, 100), 0).toFixed(2);
+    },
     getTerm(date) {
       let secDiff = Math.floor((new Date() - new Date(date)) / 1000);
       if(secDiff < 0) { return 'error'; }
