@@ -1,7 +1,14 @@
 <template>
   <section class="container">
-    <div class="page-header">
+    <div>
       <user-name></user-name>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4><i class="fa fa-fw fa-pie-chart" aria-hidden="true"></i>全般</h4>
+      </div>
+      <charger-overview class="panel-body"></charger-overview>
     </div>
 
     <div class="row">
@@ -34,15 +41,17 @@
 <script>
 import ChargeList from '../components/chargelist.vue';
 import ChargerList from '../components/chargerlist.vue';
+import ChargerOverView from '../components/chargeroverview.vue';
 import DeviceList from '../components/devicelist.vue';
 import UserName from '../components/username.vue';
 
 export default {
   components : {
-    'charge-list' : ChargeList,
-    'charger-list' : ChargerList, 
-    'device-list' : DeviceList,
-    'user-name' : UserName
+    'charge-list'      : ChargeList,
+    'charger-list'     : ChargerList,
+    'charger-overview' : ChargerOverView,
+    'device-list'      : DeviceList,
+    'user-name'        : UserName
   }
 }
 </script>
