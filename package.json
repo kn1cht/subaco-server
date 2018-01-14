@@ -29,6 +29,7 @@
     "axios": "^0.17.1",
     "babel-eslint": "^7.2.3",
     "bootstrap": "^3.3.7",
+    "cache-loader": "^1.2.0",
     "css-loader": "^0.28.7",
     "date-utils": "^1.2.21",
     "eslint": "^4.14.0",

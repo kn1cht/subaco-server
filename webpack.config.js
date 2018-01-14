@@ -13,12 +13,18 @@ const app = {
   module : {
     rules : [
       {
-        test   : /\.vue$/,
-        loader : 'vue-loader'
+        test : /\.vue$/,
+        use  : [
+          'cache-loader',
+          'vue-loader'
+        ]
       },
       {
-        test: /\.(jpg|png)$/,
-        loaders: 'file-loader?name=../images/[name].[ext]'
+        test : /\.(jpg|png)$/,
+        use  : [
+          'cache-loader',
+          'file-loader?name=../images/[name].[ext]'
+        ]
       }
     ]
   },
@@ -63,8 +69,8 @@ const bootstrap = {
         loader : 'file-loader?name=../fonts/[name].[ext]'
       },
       {
-        test: /\.(jpg|png)$/,
-        loaders: 'file-loader?name=../images/[name].[ext]'
+        test   : /\.(jpg|png)$/,
+        loader : 'file-loader?name=../images/[name].[ext]'
       }
     ]
   },

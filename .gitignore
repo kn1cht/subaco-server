@@ -8,3 +8,4 @@ public/fonts
 public/images
 public/javascripts
 public/stylesheets
+.cache-loader
