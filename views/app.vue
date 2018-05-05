@@ -17,6 +17,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><router-link to="/dashboard">ダッシュボード</router-link></li>
+            <li><router-link to="/mayfes">五月祭</router-link></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <auth-button></auth-button>
