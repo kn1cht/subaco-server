@@ -21,7 +21,7 @@ router.get('/charger/list', (req, res, next) => {
   res.redirect('../login');
 }, async(req, res) => {
   res.header('Content-Type', 'application/json; charset=utf-8');
-  res.send(await Charger.find({}).sort('-last_charge').catch((err) => { console.error(err); }));
+  res.send(await Charger.find({}).sort('-last_discharge').catch((err) => { console.error(err); }));
 });
 
 router.get('/device/list', (req, res, next) => {
