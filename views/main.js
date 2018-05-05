@@ -5,7 +5,8 @@ import App from './app.vue';
 import axios from 'axios';
 const Top = () => import(/* webpackChunkName : "top"*/ './routes/Top.vue');
 const Login = () => import(/* webpackChunkName : "login"*/ './routes/Login.vue');
-const Dashboard = () => import(/* webpackChunkName : "dashboard"*/ './routes/DashBoard.vue');
+const DashBoard = () => import(/* webpackChunkName : "dashboard"*/ './routes/DashBoard.vue');
+const MayFes = () => import(/* webpackChunkName : "dashboard"*/ './routes/MayFes.vue');
 import 'bootstrap';
 
 Vue.use(VueRouter);
@@ -28,7 +29,7 @@ window.onload = () => {
       },
       {
         path        : '/dashboard',
-        component   : Dashboard,
+        component   : DashBoard,
         beforeEnter : async(to, from, next) => {
           const res = await axios.get('api/user/isAuthed');
           if (res.data.ok === true) {
@@ -40,7 +41,7 @@ window.onload = () => {
       },
       {
         path        : '/mayfes',
-        component   : Dashboard,
+        component   : MayFes,
         beforeEnter : async(to, from, next) => {
           const res = await axios.get('api/user/isAuthed');
           if (res.data.ok === true) {
