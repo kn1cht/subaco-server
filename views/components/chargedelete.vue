@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-modal" v-bind:class="{ active : id !== null }">
+  <div class="vue-modal" v-bind:class="{ active : deleteId !== null }">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -18,12 +18,12 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 
 <style scoped>
   @keyframes show {
-    from { 
+    from {
       opacity   : 0;
       transform : translate(0, -25%);
     }
@@ -52,11 +52,16 @@ const axios = require('axios');
 
 export default {
   data() { return {} },
-  props : [ 'id' ],
+  props : {
+    deleteId : {
+      type     : String,
+      required : true
+    }
+  },
   methods : {
     delCharge() {
-      axios.get('/api/charge/delete', { params : { id : this.id }});
-      this.$emit('chargeDeleteDone', this.id);
+      axios.get('/api/charge/delete', { params : { id : this.deleteId }});
+      this.$emit('chargeDeleteDone', this.deleteId);
     }
   },
 }

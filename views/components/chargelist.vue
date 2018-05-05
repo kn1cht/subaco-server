@@ -10,7 +10,7 @@
         <td>電流(mA)</td>
         <td>容量(mAh)</td>
         <td>状態</td>
-        <td></td>
+        <td>削除</td>
       </tr>
       </thead>
       <tbody>
@@ -21,9 +21,9 @@
           <td>{{ item.device_id.name }}</td>
           <td>{{ item.current.toFixed(2) }}</td>
           <td>{{ item.capacity.toFixed(2) }}</td>
-          <td>{{ getState(item.state) }}</td>
+          <td>{{ genStateStr(item.state) }}</td>
           <td>
-            <button class="btn btn-xs btn-danger" @click="id=item._id">
+            <button class="btn btn-xs btn-danger" @click="deleteId=item._id">
               <i class="fa fa-fw fa-times-circle" aria-hidden="true"></i>
             </button>
           </td>
@@ -31,15 +31,16 @@
       </tbody>
     </table>
     <div class="panel-footer">
-      <button class="btn btn-primary" @click="create=true">
+      <button class="btn btn-primary" @click="createFlag=true">
         <i class="fa fa-fw fa-plus" aria-hidden="true"></i>新規
       </button>
     </div>
-    <charge-delete :id="id" @close="id=null" @chargeDeleteDone="delCharge"></charge-delete>
-    <charge-create :create="create" @close="create=false" @chargeDeleteDone="getCharge"></charge-create>
+    <charge-delete :deleteId="deleteId" @close="deleteId=null" @chargeDeleteDone="delCharge"></charge-delete>
+    <charge-create :createFlag=true @close="createFlag=false" @chargeDeleteDone="getCharge"></charge-create>
+    <modal></modal>
   </div>
 </template>
- 
+
 <script>
 import ChargeCreate from '../components/chargecreate.vue';
 import ChargeDelete from '../components/chargedelete.vue';
@@ -49,9 +50,9 @@ require('date-utils');
 export default {
   data() {
     return {
-      items  : [],
-      id     : null,
-      create : false
+      items      : [],
+      deleteId   : null,
+      createFlag : false
     }
   },
   components : {
@@ -60,10 +61,10 @@ export default {
   },
   methods: {
     delCharge() {
-      this.items = this.items.filter((val) => { return (val._id !== this.id); });
-      this.id = null;
+      this.items = this.items.filter((val) => { return (val._id !== this.deleteId); });
+      this.deleteId = null;
     },
-    getState(state) {
+    genStateStr(state) {
       return state == 0 ? '終了' : '充電中';
     }
   },

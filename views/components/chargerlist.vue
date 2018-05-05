@@ -8,6 +8,7 @@
       <td>推定残量</td>
       <td>容量(mAh)</td>
       <td>通知</td>
+      <td>編集</td>
     </tr>
     </thead>
     <tbody>
@@ -18,11 +19,16 @@
         <td>{{ `${soc(item.residual, item.capacity)}%` }}</td>
         <td>{{ item.capacity }}</td>
         <td>{{ item.alert_enabled ? 'オン' : 'オフ' }}</td>
+        <td>
+          <button class="btn btn-xs btn-primary" @click="editId=item._id">
+            <i class="fa fa-fw fa-edit" aria-hidden="true"></i>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
- 
+
 <script>
 import axios from 'axios';
 

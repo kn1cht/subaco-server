@@ -15,7 +15,7 @@ window.onload = () => {
     routes : [
       { path : '/', component : Top },
       {
-        path        : '/login', 
+        path        : '/login',
         component   : Login,
         beforeEnter : async(to, from, next) => {
           const res = await axios.get('api/user/isAuthed');
@@ -41,9 +41,9 @@ window.onload = () => {
       //{ path: '*', component: NotFound }
     ]
   });
-  
-  new Vue({ 
-    el     : '#app', 
+
+  new Vue({
+    el     : '#app',
     router,
     render : createElement => createElement(App)
   });

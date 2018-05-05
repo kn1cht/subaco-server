@@ -60,7 +60,7 @@
               </option>
             </select>
           </div>
-          
+
         </div>
 
         <div class="modal-footer">
@@ -73,12 +73,12 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 
 <style scoped>
   @keyframes show {
-    from { 
+    from {
       opacity   : 0;
       transform : translate(0, -25%);
     }
@@ -107,7 +107,12 @@ const axios = require('axios');
 
 export default {
   data() { return {} },
-  props : [ 'create' ],
+  props : {
+    createFlag : {
+      type     : Boolean,
+      required : true
+    }
+  },
   methods : {
     createCharge() {
       axios.get('/api/charge/create', { params : {}});

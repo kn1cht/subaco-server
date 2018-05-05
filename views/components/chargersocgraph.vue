@@ -2,13 +2,16 @@
   <div>
   </div>
 </template>
- 
+
 <script>
 import 'jquery-circliful';
 
 export default {
   data() { return {}},
-  props : [ 'soc', 'name' ],
+  props : {
+    name : Number,
+    soc  : Number
+  },
   mounted () {
     $(this.$el).circliful({
       width                 : 30,
