@@ -35,15 +35,15 @@
         <i class="fa fa-fw fa-plus" aria-hidden="true"></i>新規
       </button>
     </div>
-    <charge-delete :deleteId="deleteId" @close="deleteId=null" @chargeDeleteDone="delCharge"></charge-delete>
-    <charge-create :createFlag=true @close="createFlag=false" @chargeDeleteDone="getCharge"></charge-create>
+    <ChargeDelete :delete-id="deleteId" @close="deleteId=null" @chargeDeleteDone="delCharge"></ChargeDelete>
+    <ChargeCreate :create-flag="createFlag" @close="createFlag=false" @chargeDeleteDone="getCharge"></ChargeCreate>
     <modal></modal>
   </div>
 </template>
 
 <script>
-import ChargeCreate from '../components/chargecreate.vue';
-import ChargeDelete from '../components/chargedelete.vue';
+import ChargeCreate from '../components/ChargeCreate.vue';
+import ChargeDelete from '../components/ChargeDelete.vue';
 const axios = require('axios');
 require('date-utils');
 
@@ -55,10 +55,7 @@ export default {
       createFlag : false
     }
   },
-  components : {
-    'charge-create' : ChargeCreate,
-    'charge-delete' : ChargeDelete
-  },
+  components : { ChargeCreate, ChargeDelete },
   methods: {
     delCharge() {
       this.items = this.items.filter((val) => { return (val._id !== this.deleteId); });

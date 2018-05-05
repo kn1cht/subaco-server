@@ -16,7 +16,7 @@
     </tbody>
   </table>
 </template>
- 
+
 <script>
 const axios = require('axios');
 

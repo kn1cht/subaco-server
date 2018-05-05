@@ -4,7 +4,7 @@
     <router-link to="/login" v-else><button type="submit" class="btn navbar-btn btn-success btn-sm">ログイン</button></router-link>
   </div>
 </template>
- 
+
 <script>
 const axios = require('axios');
 

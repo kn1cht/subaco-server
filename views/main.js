@@ -3,9 +3,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './app.vue';
 import axios from 'axios';
-const Top = () => import(/* webpackChunkName: "top"*/ './routes/top.vue');
-const Login = () => import(/* webpackChunkName: "login"*/ './routes/login.vue');
-const Dashboard = () => import(/* webpackChunkName: "dashboard"*/ './routes/dashboard.vue');
+const Top = () => import(/* webpackChunkName : "top"*/ './routes/Top.vue');
+const Login = () => import(/* webpackChunkName : "login"*/ './routes/Login.vue');
+const Dashboard = () => import(/* webpackChunkName : "dashboard"*/ './routes/DashBoard.vue');
 import 'bootstrap';
 
 Vue.use(VueRouter);
@@ -27,7 +27,7 @@ window.onload = () => {
         }
       },
       {
-        path        : '/dashboard', 
+        path        : '/dashboard',
         component   : Dashboard,
         beforeEnter : async(to, from, next) => {
           const res = await axios.get('api/user/isAuthed');

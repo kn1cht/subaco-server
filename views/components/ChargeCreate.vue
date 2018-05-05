@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-modal" v-bind:class="{ active : create }">
+  <div class="vue-modal" v-bind:class="{ active : createFlag === true }">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

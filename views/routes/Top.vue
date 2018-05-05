@@ -6,7 +6,7 @@
         <img src="../../static/logotype-withtext.png" alt="SUBACO main logotype">
       </h1>
       <p>Smart USB BAttery Charging Organizer</p>
-    </div>  
+    </div>
   </section>
 </template>
 
@@ -17,7 +17,7 @@
   .cover {
     background-image    : url("../../static/cover.jpg");
     background-size     : cover;
-    background-position : center center; 
+    background-position : center center;
     padding             : 0;
     width               : 100vw;
     height              : 100vh;

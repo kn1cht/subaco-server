@@ -19,7 +19,7 @@
             <li><router-link to="/dashboard">ダッシュボード</router-link></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <auth-button></auth-button>
+            <AuthButton></AuthButton>
           </ul>
         </div><!--/.nav-collapse -->
       </div><!--/.container-fluid -->
@@ -41,12 +41,10 @@
 </style>
 
 <script>
-import AuthButton from './components/authbutton.vue';
+import AuthButton from './components/AuthButton.vue';
 
 export default {
-  components : {
-    'auth-button' : AuthButton
-  }
+  components : { AuthButton }
 }
 </script>
 
