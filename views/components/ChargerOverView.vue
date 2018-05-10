@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-2" v-for="item in items" :key="item._id">
+    <div :class="colSize" v-for="item in items" :key="item._id">
       <ChargerSocGraph :soc="soc(item.residual, item.capacity)" :name="item.name"></ChargerSocGraph>
     </div>
   </div>
@@ -11,7 +11,12 @@ import axios from 'axios';
 import ChargerSocGraph from './ChargerSocGraph.vue';
 
 export default {
-  data() { return { items : [] }},
+  data() {
+    return {
+      items : [],
+      colSize : 3
+    }
+  },
   components : { ChargerSocGraph },
   methods    : {
     soc(residual, capacity) {
@@ -22,6 +27,7 @@ export default {
 	async created() {
 		let res = await axios.get('/api/charger/list');
     this.items = res.data;
-  },
+    this.colSize = `col-xs-${Math.max(Math.floor(12 / this.items.length), this.colSize)}`;
+  }
 }
 </script>
