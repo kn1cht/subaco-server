@@ -19,6 +19,7 @@
           </div>
           <ChargerList class="panel-body"></ChargerList>
         </div>
+        <DeviceList class="panel-body"></DeviceList>
       </div>
       <div class="col-md-6">
         <div class="panel panel-info">
