@@ -3,6 +3,13 @@
   </div>
 </template>
 
+<style scoped>
+div {
+  max-width : 250px;
+  min-width : 80px;
+}
+</style>
+
 <script>
 import 'jquery-circliful';
 
@@ -14,7 +21,7 @@ export default {
   },
   mounted () {
     $(this.$el).circliful({
-      width                 : 30,
+      width                 : 10,
       animationStep         : 5,
       foregroundColor       : '#9f3',
       backgroundBorderWidth : 2,
