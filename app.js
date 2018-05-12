@@ -34,8 +34,8 @@ app.use(flash());
 app.use(logger('dev'));
 
 /*** configure session and passport ***/
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/subaco', { 
-  useMongoClient : true 
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/subaco', {
+  useMongoClient : true
 });
 app.use(session({
   secret            : process.env.SESSION_SECRET || '',
@@ -75,7 +75,7 @@ app.use((err, req, res) => {
   res.locals.title = err.message;
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
+
   // render the error page
   res.status(err.status || 500);
   res.render('error');

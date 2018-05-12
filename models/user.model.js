@@ -3,18 +3,29 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   username : {
+    required : true,
     type   : String,
     unique : true
   },
   email : {
-    type      : String,
     lowercase : true,
+    required : true,
+    type      : String,
     unique    : true
   },
-  password : String,
-  admin    : {
-    type    : Boolean,
-    default : false
+  password  : String,
+  is_admin  : {
+    default : false,
+    type    : Boolean
+  },
+  is_charging : {
+    default : false,
+    type    : Boolean
+  },
+  active_charger_id : {
+    type     : Schema.Types.ObjectId,
+    ref      : 'Charger',
+    required : true
   }
 });
 
