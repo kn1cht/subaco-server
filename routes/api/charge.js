@@ -2,6 +2,7 @@ const express = require('express');
 const Charge = require('../../models/charge.model');
 const Charger = require('../../models/charger.model');
 const Device = require('../../models/device.model');
+const RecentCharge = require('../../models/recent_charge.model');
 const SubacoModule = require('../../models/subaco_module.model');
 const User = require('../../models/user.model');
 
@@ -40,6 +41,12 @@ router.post('/start', async(req, res) => {
     res.send({ ok : false, error : 'Wrong token' });
     return;
   }
+  // create charge start event
+  const recentCharge = new RecentCharge({
+    is_charging : true,
+    user_id     : subacoModule.user_id
+  });
+  recentCharge.save().catch((err) => { console.error(err); });
   // update user info
   const user = await User.findOneAndUpdate({
     _id : subacoModule.user_id
@@ -94,10 +101,16 @@ router.post('/append', async(req, res) => {
     return;
   }
   const user = await User.findOne({ _id : subacoModule.user_id });
-  // update user info if charge ended
   if(data.state === 0) {
+    // update user info if charge ended
     user.is_charging = false;
     user.save();
+    // create charge end event
+    const recentCharge = new RecentCharge({
+      is_charging : false,
+      user_id     : subacoModule.user_id
+    });
+    recentCharge.save().catch((err) => { console.error(err); });
   }
 
   const latestCharge = (await Charge.find({
