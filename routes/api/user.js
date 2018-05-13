@@ -21,6 +21,16 @@ router.get('/info', (req, res) => {
   res.send(user);
 });
 
+router.get('/activeCharger', async(req, res) => {
+  res.header('Content-Type', 'application/json; charset=utf-8');
+  if(req.isUnauthenticated()) {
+    //res.send({ ok : false, error : 'Not Authed' });
+    //return;
+  }
+  const user = await User.findOne({ /*_id : req.user._id*/ }).populate('active_charger_id');
+  res.send({ ok : true, charger : user.active_charger_id });
+});
+
 router.get('/isCharging/push', async(req, res) => {
   req.socket.setTimeout(Number.MAX_SAFE_INTEGER); // because Infinity causes error
   res.header({
