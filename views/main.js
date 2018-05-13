@@ -51,18 +51,6 @@ window.onload = () => {
           }
         }
       },
-      {
-        path        : '/mayfes',
-        component   : Dashboard,
-        beforeEnter : async(to, from, next) => {
-          const res = await axios.get('api/user/isAuthed');
-          if (res.data.ok === true) {
-            next();
-          } else {
-            next({ path : '/login' });
-          }
-        }
-      },
       //{ path: '*', component: NotFound }
     ]
   });
