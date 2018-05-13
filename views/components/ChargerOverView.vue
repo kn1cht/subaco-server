@@ -26,7 +26,7 @@ export default {
   },
 	async created() {
 		let res = await axios.get('/api/charger/list');
-    this.items = res.data;
+    this.items = res.data.list;
     this.colSize = `col-xs-${Math.max(Math.floor(12 / this.items.length), this.colSize)}`;
   }
 }

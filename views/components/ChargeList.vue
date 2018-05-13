@@ -67,7 +67,7 @@ export default {
   },
 	async created() {
 		let res = await axios.get('/api/charge/list');
-    this.items = res.data;
+    this.items = res.data.list;
   }
 }
 </script>

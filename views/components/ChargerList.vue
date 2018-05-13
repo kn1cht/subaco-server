@@ -60,7 +60,7 @@ export default {
   },
 	async created() {
 		let res = await axios.get('/api/charger/list');
-    this.items = res.data;
+    this.items = res.data.list;
   }
 }
 </script>

@@ -16,28 +16,37 @@ router.get('/', (req, res) => {
   res.send(body);
 });
 
-router.get('/charger/list', (req, res, next) => {
-  if(req.isAuthenticated()) { return next(); }
-  res.redirect('../login');
-}, async(req, res) => {
+router.get('/charger/list', async(req, res) => {
+  if(req.isUnauthenticated()) {
+    res.send({ ok : false, error : 'Not Authed' });
+    return;
+  }
   res.header('Content-Type', 'application/json; charset=utf-8');
-  res.send(await Charger.find({}).sort('-last_discharge').catch((err) => { console.error(err); }));
+  const list = await Charger.find({}).sort('-last_discharge')
+                            .catch((err) => { console.error(err); });
+  res.send({ ok : true, list });
 });
 
-router.get('/device/list', (req, res, next) => {
-  if(req.isAuthenticated()) { return next(); }
-  res.redirect('../login');
-}, async(req, res) => {
+router.get('/device/list', async(req, res) => {
+  if(req.isUnauthenticated()) {
+    res.send({ ok : false, error : 'Not Authed' });
+    return;
+  }
   res.header('Content-Type', 'application/json; charset=utf-8');
-  res.send(await Device.find({}).sort('-last_charge').catch((err) => { console.error(err); }));
+  const list = await Device.find({}).sort('-last_charge')
+                            .catch((err) => { console.error(err); });
+  res.send({ ok : true, list });
 });
 
-router.get('/module/list', (req, res, next) => {
-  if(req.isAuthenticated()) { return next(); }
-  res.redirect('../login');
-}, async(req, res) => {
+router.get('/module/list', async(req, res) => {
+  if(req.isUnauthenticated()) {
+    res.send({ ok : false, error : 'Not Authed' });
+    return;
+  }
   res.header('Content-Type', 'application/json; charset=utf-8');
-  res.send(await SubacoModule.find({}).sort('-last_charge').catch((err) => { console.error(err); }));
+  const list = await SubacoModule.find({}).sort('-last_charge')
+                            .catch((err) => { console.error(err); });
+  res.send({ ok : true, list });
 });
 
 module.exports = router;

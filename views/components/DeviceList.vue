@@ -44,7 +44,7 @@ export default {
   },
 	async created() {
 		let res = await axios.get('/api/device/list');
-    this.items = res.data;
+    this.items = res.data.list;
   }
 }
 </script>

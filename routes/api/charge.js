@@ -12,14 +12,17 @@ const findSubacoModuleFromToken = (token) => {
   return SubacoModule.findOne({ token }).catch((err) => { console.error(err); });
 }
 
-router.get('/list', (req, res, next) => {
-  if(req.isAuthenticated()) { return next(); }
-  res.redirect('../login');
-}, async(req, res) => {
+router.get('/list', async(req, res) => {
+  if(req.isUnauthenticated()) {
+    res.send({ ok : false, error : 'Not Authed' });
+    return;
+  }
   res.header('Content-Type', 'application/json; charset=utf-8');
-  res.send(await Charge.find({}).sort('-created_at')
-    .populate('device_id', 'name').populate('charger_id', 'name')
-    .catch((err) => { console.error(err); }));
+  const list = await Charge.find({}).sort('-created_at')
+                           .populate('device_id', 'name')
+                           .populate('charger_id', 'name')
+                           .catch((err) => { console.error(err); });
+  res.send({ ok : true, list });
 });
 
 router.get('/delete', async(req, res) => {
