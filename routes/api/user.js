@@ -24,10 +24,10 @@ router.get('/info', (req, res) => {
 router.get('/activeCharger', async(req, res) => {
   res.header('Content-Type', 'application/json; charset=utf-8');
   if(req.isUnauthenticated()) {
-    //res.send({ ok : false, error : 'Not Authed' });
-    //return;
+    res.send({ ok : false, error : 'Not Authed' });
+    return;
   }
-  const user = await User.findOne({ /*_id : req.user._id*/ }).populate('active_charger_id');
+  const user = await User.findOne({ _id : req.user._id }).populate('active_charger_id');
   res.send({ ok : true, charger : user.active_charger_id });
 });
 
@@ -42,14 +42,12 @@ router.get('/isCharging/push', async(req, res) => {
     res.send({ ok : false, error : 'Not Authed' });
     return;
   }
-  const lastRecord = await RecentCharge.find().sort({ $natural : -1 }).limit(1)[0];
-  console.log(lastRecord);
-  const cursor = RecentCharge.find({ _id : req.user._id }).gt('_id', lastRecord._id).tailable().cursor();
+  const lastRecord = (await RecentCharge.find().sort({ $natural : -1 }).limit(1))[0];
+  const cursor = RecentCharge.find({ user_id : req.user._id }).gt('_id', lastRecord._id).tailable().cursor();
   let sseId = 0; // event id of server sent event
 
   cursor.on('error', (err) => { console.error(err); });
   cursor.on('data', (data) => {
-    console.log(data);
     res.write(`id: ${sseId++}\n`);
     res.write(`data: ${data.is_charging}\n\n`);
   });
