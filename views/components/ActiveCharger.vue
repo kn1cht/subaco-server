@@ -15,7 +15,6 @@ export default {
 	async created() {
     const res = await axios.get('/api/user/activeCharger');
     this.activeCharger = res.data.charger;
-    console.log(this.activeCharger);
   }
 }
 </script>

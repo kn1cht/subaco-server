@@ -6,7 +6,7 @@ import axios from 'axios';
 const Top = () => import(/* webpackChunkName : "top"*/ './routes/Top.vue');
 const Login = () => import(/* webpackChunkName : "login"*/ './routes/Login.vue');
 const DashBoard = () => import(/* webpackChunkName : "dashboard"*/ './routes/DashBoard.vue');
-const MayFes = () => import(/* webpackChunkName : "dashboard"*/ './routes/MayFes.vue');
+const MayFes = () => import(/* webpackChunkName : "mayfes"*/ './routes/MayFes.vue');
 import 'bootstrap';
 
 Vue.use(VueRouter);
