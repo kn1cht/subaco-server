@@ -1,11 +1,31 @@
 <template>
-  <ul>
-    <li>{{ (new Date(latest.start_time)).toFormat('YYYY/MM/DD HH24:MI:SS') }}</li>
-    <li>{{ latest.state ? '-' : (new Date(latest.update_time)).toFormat('YYYY/MM/DD HH24:MI:SS') }}</li>
-    <li>{{ latest.device_id.manufacturer || 'Unknown' }}</li>
-    <li>{{ latest.device_id.name || 'Unknown' }}</li>
-  </ul>
+  <div>
+    <p>{{ latest.device_id.manufacturer || '製造元不明' }}</p>
+    <p>{{ latest.device_id.name || '名称不明' }}</p>
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+      <tr>
+        <td colspan="2">履歴</td>
+      </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in items.slice(0, 4)" :key="item._id">
+          <td>{{ item.device_id.name }}</td>
+          <td>{{ formatTimeDiff(calcSecDiff(item.update_time, item.start_time)) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
+
+<style scoped>
+p {
+  font-size: 30px;
+}
+table {
+  font-size: 15px;
+}
+</style>
 
 <script>
 const axios = require('axios');
@@ -18,7 +38,23 @@ export default {
       latest : {}
     }
   },
-  methods: {},
+  methods: {
+    calcSecDiff(t1, t2) {
+      return Math.floor((new Date(t1) - new Date(t2)) / 1000);
+    },
+    formatTimeDiff(secDiff) {
+      if(secDiff < 0) { return 'error'; }
+      let minDiff = Math.floor(secDiff / 60);
+      secDiff -= minDiff * 60;
+      let hourDiff = Math.floor(minDiff / 60);
+      minDiff -= hourDiff * 60;
+      const dayDiff = Math.floor(hourDiff / 24);
+      hourDiff -= dayDiff * 24;
+      if(hourDiff === 0) { return `${minDiff}分${secDiff}秒`; }
+      if(dayDiff === 0) { return `${hourDiff}時間${minDiff}分${secDiff}秒`; }
+      else { return `${dayDiff}日${hourDiff}時間${minDiff}分`; }
+    }
+  },
 	async created() {
 		let res = await axios.get('/api/charge/list');
     this.items = res.data.list;

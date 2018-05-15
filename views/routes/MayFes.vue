@@ -1,13 +1,10 @@
 <template>
   <section>
-    <div class="container">
-      <UserName></UserName>
-    </div>
     <div class = "content">
-      <div id="charger_info" class="panel panel-info">
+      <div class="panel panel-info">
         <ActiveCharger class="panel-body"></ActiveCharger>
       </div>
-      <div id="subaco_info" class="panel panel-info">
+      <div class="panel panel-info">
         <p>
           <small>経過時間</small><br>
           {{ formatTimeDiff(elapsedTime) }}
@@ -17,7 +14,7 @@
           {{ currentmA }} mA
         </p>
       </div>
-      <div id="device_info" class="panel panel-info">
+      <div class="panel panel-info">
         <DeviceCharged class="panel-body"></DeviceCharged>
       </div>
 
@@ -26,20 +23,17 @@
 </template>
 
 <style scoped>
-div#charger_info {
-  font-size: 30px;
-}
-div#subaco_info {
+p {
   font-size: 50px;
 }
-div#subaco_info small {
+p small {
   font-size: 30px;
 }
 div.content {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 0 5vw;
+  margin: 5vw;
 }
 div.panel {
   flex: 1 0 auto;
