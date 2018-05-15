@@ -2,6 +2,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 const webpack = require('webpack');
 
+const vuePath = (process.env.NODE_ENV === 'development') ? 'vue/dist/vue.js' : 'vue/dist/vue.min.js';
+
 const app = {
   entry  : { main : './views/main.js'},
   output : {
@@ -43,7 +45,7 @@ const app = {
     alias : {
       bootstrap : 'bootstrap/dist/js/bootstrap.min.js',
       jquery    : 'jquery/dist/jquery.min.js',
-      vue       : 'vue/dist/vue.min.js'
+      vue       : vuePath
     }
   },
   cache : true
