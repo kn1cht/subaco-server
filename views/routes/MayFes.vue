@@ -1,19 +1,23 @@
 <template>
-  <section class="container">
-    <div>
+  <section>
+    <div class="container">
       <UserName></UserName>
     </div>
     <div class = "content">
-      <div class="panel panel-info">
+      <div id="charger_info" class="panel panel-info">
         <ActiveCharger class="panel-body"></ActiveCharger>
       </div>
-      <div class="panel panel-info">
-        <ul class="panel-body">
-          <li>{{ elapsedTime }}</li>
-          <li>{{ latest.current.toFixed(0) }} mA</li>
-        </ul>
+      <div id="subaco_info" class="panel panel-info">
+        <p>
+          <small>経過時間</small><br>
+          {{ formatTimeDiff(elapsedTime) }}
+        </p>
+        <p>
+          <small>電流(平均)</small><br>
+          {{ currentmA }} mA
+        </p>
       </div>
-      <div class="panel panel-info">
+      <div id="device_info" class="panel panel-info">
         <DeviceCharged class="panel-body"></DeviceCharged>
       </div>
 
@@ -22,11 +26,23 @@
 </template>
 
 <style scoped>
+div#charger_info {
+  font-size: 30px;
+}
+div#subaco_info {
+  font-size: 50px;
+}
+div#subaco_info small {
+  font-size: 30px;
+}
 div.content {
   display: flex;
-  flex: 1 0 auto;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-around;
+  margin: 0 5vw;
+}
+div.panel {
+  flex: 1 0 auto;
 }
 </style>
 
@@ -40,9 +56,10 @@ require('date-utils');
 export default {
   data() {
     return {
-      currentTime : 0,
-      items       : [],
-      latest      : {}
+      nowTime   : 0,
+      currentmA : 0,
+      items     : [],
+      latest    : {}
     }
   },
   components : {
@@ -51,8 +68,12 @@ export default {
     UserName
   },
   computed: {
-    elapsedTime () {
-      let secDiff = Math.floor((this.currentTime - new Date(this.latest.start_time)) / 1000);
+    elapsedTime() {
+      return Math.floor((this.nowTime - new Date(this.latest.start_time)) / 1000);
+    }
+  },
+  methods: {
+    formatTimeDiff(secDiff) {
       if(secDiff < 0) { return 'error'; }
       let minDiff = Math.floor(secDiff / 60);
       secDiff -= minDiff * 60;
@@ -65,14 +86,30 @@ export default {
     }
   },
 	async created() {
-		let res = await axios.get('/api/charge/list');
+    let res = await axios.get('/api/charge/list');
     this.items = res.data.list;
     this.latest = this.items[0];
 
     const self = this;
     (function timerLoop() {
-      self.currentTime = Math.floor(new Date);
+      self.nowTime = Math.floor(new Date);
       requestAnimationFrame(timerLoop);
+    }());
+    (function currentAnimationLoop() {
+      const diff = self.latest.current.toFixed(0) - self.currentmA;
+      if(Math.abs(diff) > 0) {
+        const sign = diff / Math.abs(diff);
+        if(Math.abs(diff) > 100) {
+          self.currentmA += sign * 7 * 7;
+        }
+        else if(Math.abs(diff) > 50) {
+          self.currentmA += sign * 7;
+        }
+        else {
+          self.currentmA += sign;
+        }
+      }
+      requestAnimationFrame(currentAnimationLoop);
     }());
   }
 }
