@@ -18,11 +18,25 @@ router.get('/list', async(req, res) => {
     return;
   }
   res.header('Content-Type', 'application/json; charset=utf-8');
-  const list = await Charge.find({}).sort('-created_at')
-                           .populate('device_id', 'name')
-                           .populate('charger_id', 'name')
-                           .catch((err) => { console.error(err); });
+  const list = await Charge.find({
+    user_id : req.user._id
+  }).sort('-created_at')
+    .populate('device_id', 'name')
+    .populate('charger_id', 'name')
+    .catch((err) => { console.error(err); });
   res.send({ ok : true, list });
+});
+
+router.get('/latest', async(req, res) => {
+  if(req.isUnauthenticated()) {
+    res.send({ ok : false, error : 'Not Authed' });
+    return;
+  }
+  res.header('Content-Type', 'application/json; charset=utf-8');
+  const charge = (await Charge.find({
+    user_id : req.user._id
+  }).sort('-created_at').limit(1))[0];
+  res.send({ ok : true, charge });
 });
 
 router.get('/delete', async(req, res) => {
