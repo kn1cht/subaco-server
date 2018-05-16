@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ChargerSchema = new Schema({
+  manufacturer   : String,
   name           : String,
   last_charge    : Date,
   last_discharge : Date,
