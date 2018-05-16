@@ -21,8 +21,8 @@ router.get('/list', async(req, res) => {
   const list = await Charge.find({
     user_id : req.user._id
   }).sort('-created_at')
-    .populate('device_id', 'name')
-    .populate('charger_id', 'name')
+    .populate('device_id')
+    .populate('charger_id')
     .catch((err) => { console.error(err); });
   res.send({ ok : true, list });
 });
@@ -98,7 +98,7 @@ router.post('/start', async(req, res) => {
   const charge = new Charge({
     start_time  : new Date(data.ts * 1000),
     update_time : new Date(data.ts * 1000),
-    current     : data.current,
+    current     : Math.max(data.current, 0),
     user_id     : subacoModule.user_id,
     device_id   : device._id,
     charger_id  : charger._id,
@@ -137,7 +137,7 @@ router.post('/append', async(req, res) => {
   }).sort('-created_at').limit(1))[0];
   const timeFromStart = (new Date(data.ts * 1000) - latestCharge.start_time) / 1000 / 3600;
   const timeFromUpdate = (new Date(data.ts * 1000) - latestCharge.update_time) / 1000 / 3600;
-  const capacityDiff = data.current * 5 / 3.6 * timeFromUpdate; // lithium ion battery voltage : 3.6
+  const capacityDiff = Math.max(data.current, 0) * 5 / 3.6 * timeFromUpdate; // lithium ion battery voltage : 3.6
   const capacity = latestCharge.capacity + capacityDiff;
   // update charger info
   const charger = await Charger.findOne({ _id : user.active_charger_id });
