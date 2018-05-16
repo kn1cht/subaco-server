@@ -1,7 +1,7 @@
 /*** Webpack build entry point ***/
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import App from './app.vue';
+import App from './App.vue';
 import axios from 'axios';
 const Top = () => import(/* webpackChunkName : "top"*/ './routes/Top.vue');
 const Login = () => import(/* webpackChunkName : "login"*/ './routes/Login.vue');

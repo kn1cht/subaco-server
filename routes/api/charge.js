@@ -138,14 +138,10 @@ router.post('/append', async(req, res) => {
   const capacityDiff = data.current * 5 / 3.6 * timeFromUpdate; // lithium ion battery voltage : 3.6
   const capacity = latestCharge.capacity + capacityDiff;
   // update charger info
-  await Charger.update({ _id : user.active_charger_id }, {
-    $set : {
-      last_discharge : new Date(data.ts * 1000)
-    },
-    $inc : {
-      residual : - capacityDiff // reduce charger's capacity
-    }
-  }).catch((err) => { console.error(err); });
+  const charger = await Charger.findOne({ _id : user.active_charger_id });
+  charger.last_discharge = new Date(data.ts * 1000);
+  charger.residual -= capacityDiff; // reduce charger's capacity
+  charger.save().catch((err) => { console.error(err); });
   // update charge info
   await Charge.update({ _id : latestCharge._id }, {
     $set : {
