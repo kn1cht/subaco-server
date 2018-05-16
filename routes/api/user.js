@@ -32,7 +32,7 @@ router.get('/activeCharger', async(req, res) => {
 });
 
 router.get('/isCharging/push', async(req, res) => {
-  req.socket.setTimeout(Number.MAX_SAFE_INTEGER); // because Infinity causes error
+  req.socket.setTimeout(2147483647); // because Infinity causes error
   res.header({
     'Content-Type'  : 'text/event-stream; charset=utf-8',
     'Cache-Control' : 'no-cache',
