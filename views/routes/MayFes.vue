@@ -1,10 +1,15 @@
 <template>
   <section>
     <div class = "content">
-      <div class="panel panel-info">
-        <ActiveCharger class="panel-body"></ActiveCharger>
+      <div class="infobox">
+        <ActiveCharger></ActiveCharger>
       </div>
-      <div class="panel panel-info">
+      <div class="infoline">
+      </div>
+      <div class="infobox">
+        <p>
+          {{ isCharging ? '充電中' : '待機中' }}
+        </p>
         <p>
           <small>経過時間</small><br>
           {{ formatTimeDiff(elapsedTime) }}
@@ -14,15 +19,21 @@
           {{ currentmA }} mA
         </p>
       </div>
-      <div class="panel panel-info">
-        <DeviceCharged class="panel-body"></DeviceCharged>
+      <div class="infoline">
       </div>
-
+      <div class="infobox">
+        <DeviceCharged></DeviceCharged>
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped>
+section {
+  color: white;
+  background-color: #444;
+  height: 100vh;
+}
 p {
   font-size: 50px;
 }
@@ -33,9 +44,14 @@ div.content {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 5vw;
+  padding: 3vw;
 }
-div.panel {
+div.infobox {
+  background-color: #001017;
+  padding: 15px;
+  flex: 5 0 auto;
+}
+div.infoline {
   flex: 1 0 auto;
 }
 </style>
@@ -50,10 +66,11 @@ require('date-utils');
 export default {
   data() {
     return {
-      nowTime   : 0,
-      currentmA : 0,
-      items     : [],
-      latest    : {}
+      currentmA  : 0,
+      isCharging : false,
+      items      : [],
+      latest     : {},
+      nowTime    : 0,
     }
   },
   components : {
@@ -83,6 +100,11 @@ export default {
     let res = await axios.get('/api/charge/list');
     this.items = res.data.list;
     this.latest = this.items[0];
+
+    let es = new EventSource('/api/user/isCharging/push');
+    es.addEventListener('message', event => {
+      this.isCharging = JSON.parse(event.data); // convert to Boolean
+    }, false);
 
     const self = this;
     (function timerLoop() {

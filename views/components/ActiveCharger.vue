@@ -28,8 +28,10 @@ export default {
     activeCharger : {},
     socOption     : {
       backgroundBorderWidth : 15,
+      fontColor             : '#eee',
       percentageTextSize    : 30,
-      percentageY           : 120
+      percentageY           : 120,
+      text                  : ""
     }
   }},
   components : { ChargerSocGraph },
@@ -37,6 +39,7 @@ export default {
 	async created() {
     const res = await axios.get('/api/user/activeCharger');
     this.activeCharger = res.data.charger;
+    this.socOption.text = this.activeCharger.name;
   }
 }
 </script>
