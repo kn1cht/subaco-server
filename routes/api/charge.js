@@ -74,14 +74,16 @@ router.post('/start', async(req, res) => {
   }).catch((err) => { console.error(err); });
   // update device info (or create new one)
   const device = await Device.findOneAndUpdate({
-    name    : data.toDevice.name,
-    serial  : data.toDevice.serialNum,
-    user_id : subacoModule.user_id
+    manufacturer : data.toDevice.manufacturer,
+    name         : data.toDevice.name,
+    serial       : data.toDevice.serialNum,
+    user_id      : subacoModule.user_id
   }, { $set : {
-    name        : data.toDevice.name,
-    serial      : data.toDevice.serialNum,
-    user_id     : subacoModule.user_id,
-    last_charge : new Date(data.ts * 1000)
+    manufacturer : data.toDevice.manufacturer,
+    name         : data.toDevice.name,
+    serial       : data.toDevice.serialNum,
+    user_id      : subacoModule.user_id,
+    last_charge  : new Date(data.ts * 1000)
   }}, {
     returnNewDocument : true,
     upsert            : true // create if not exist
