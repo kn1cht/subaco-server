@@ -7,6 +7,10 @@
       <div class="infoline">
       </div>
       <div class="infobox">
+        <div class="main-logo">
+          <img v-if="isCharging" src="../../static/logotype-withtext.png" alt="SUBACO logotype">
+          <img v-else src="../../static/logotype-withtext-disabled.png" alt="SUBACO logotype disabled">
+        </div>
         <p>
           {{ isCharging ? '充電中' : '待機中' }}
         </p>
@@ -40,7 +44,11 @@ p {
 p small {
   font-size: 30px;
 }
+.main-logo > img {
+  width: 100%
+}
 div.content {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -50,9 +58,13 @@ div.infobox {
   background-color: #001017;
   padding: 15px;
   flex: 5 0 auto;
+  width: 300px;
 }
 div.infoline {
   flex: 1 0 auto;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
 }
 </style>
 
@@ -105,6 +117,8 @@ export default {
     es.addEventListener('message', event => {
       this.isCharging = JSON.parse(event.data); // convert to Boolean
     }, false);
+
+    this.isCharging = (await axios.get('/api/user/info')).data.is_charging;
 
     const self = this;
     (function timerLoop() {

@@ -65,7 +65,7 @@ export default {
   },
   methods : {
     activateCharger() {
-      //axios.get('/api/charger/activate', { params : { id : this.charger._id }});
+      axios.get('/api/charger/activate', { params : { id : this.charger._id }});
       this.$emit('chargerActivated', this.charger._id);
     }
   }

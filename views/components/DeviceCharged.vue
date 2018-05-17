@@ -1,15 +1,16 @@
 <template>
   <div>
     <p>{{ latest.device_id.manufacturer || '製造元不明' }}</p>
-    <p>{{ latest.device_id.name || '名称不明' }}</p>
-    <table class="table table-striped table-bordered table-hover">
+    <p class="large">{{ latest.device_id.name || '名称不明' }}</p>
+    <hr>
+    <table class="table table-striped table-hover">
       <thead>
       <tr>
         <td colspan="2">履歴</td>
       </tr>
       </thead>
       <tbody>
-        <tr v-for="item in items.slice(0, 4)" :key="item._id">
+        <tr v-for="item in items.slice(0, 8)" :key="item._id">
           <td>{{ item.device_id.name }}</td>
           <td>{{ formatTimeDiff(calcSecDiff(item.update_time, item.start_time)) }}</td>
         </tr>
@@ -19,11 +20,25 @@
 </template>
 
 <style scoped>
+div {
+  border: solid 1px #ddd;
+  padding: 14px;
+}
 p {
+  font-size: 20px;
+}
+p.large {
   font-size: 30px;
 }
 table {
-  font-size: 15px;
+  font-size: 18px;
+  margin: 0px;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: #666;
+}
+.table-striped>tbody>tr:hover {
+  background-color: #33444e;
 }
 </style>
 
