@@ -16,8 +16,14 @@ import 'jquery-circliful';
 export default {
   data() { return {}},
   props : {
-    residual : Number,
-    capacity : Number,
+    residual : {
+      type   : Number,
+      default: -1
+    },
+    capacity : {
+      type   : Number,
+      default: -1
+    },
     option   : {
       type   : Object,
       default: {}
@@ -26,7 +32,7 @@ export default {
   methods : {
     soc(residual, capacity) {
       const percentage = residual / capacity * 100;
-      return Math.max( Math.min(percentage, 100), 0).toFixed(2);
+      return Math.max( Math.min(percentage, 100), 0).toFixed(0);
     }
   },
   mounted () {
