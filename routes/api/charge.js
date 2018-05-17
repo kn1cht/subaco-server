@@ -70,7 +70,7 @@ router.post('/start', async(req, res) => {
   }, { $set : {
     is_charging : true
   }}, {
-    returnNewDocument : true
+    new : true
   }).catch((err) => { console.error(err); });
   // update device info (or create new one)
   const device = await Device.findOneAndUpdate({
@@ -85,8 +85,8 @@ router.post('/start', async(req, res) => {
     user_id      : subacoModule.user_id,
     last_charge  : new Date(data.ts * 1000)
   }}, {
-    returnNewDocument : true,
-    upsert            : true // create if not exist
+    new    : true,
+    upsert : true // create if not exist
   }).catch((err) => { console.error(err); });
   // update charger info
   const charger = await Charger.findOneAndUpdate({
