@@ -1,28 +1,10 @@
 <template>
     <Tabs :options="{ useUrlFragment: false }">
       <Tab :name="chargerTabs[0].name">
-        <div>
-          <p style="font-size: 20px;">{{ chargerTabs[0].manufacturer || '製造元不明' }}</p>
-          <p style="font-size: 30px;">{{ chargerTabs[0].name || '名称不明' }}</p>
-          <ChargerSocGraph
-            v-if="chargerTabs[0].capacity"
-            :residual="chargerTabs[0].residual + 0"
-            :capacity="chargerTabs[0].capacity + 0"
-            :option="socOption"
-          ></ChargerSocGraph>
-        </div>
+        <ChargerPanel v-if="activeCharger._id" :charger=chargerTabs[0] :active=activeCharger @chargerActivated="fetchData"></ChargerPanel>
       </Tab>
       <Tab :name="chargerTabs[1].name">
-        <div>
-          <p style="font-size: 20px;">{{ chargerTabs[1].manufacturer || '製造元不明' }}</p>
-          <p style="font-size: 30px;">{{ chargerTabs[1].name || '名称不明' }}</p>
-          <ChargerSocGraph
-            v-if="chargerTabs[1].capacity"
-            :residual="chargerTabs[1].residual + 0"
-            :capacity="chargerTabs[1].capacity + 0"
-            :option="socOption"
-          ></ChargerSocGraph>
-        </div>
+        <ChargerPanel v-if="activeCharger._id" :charger=chargerTabs[1] :active=activeCharger @chargerActivated="fetchData"></ChargerPanel>
       </Tab>
     </Tabs>
 </template>
@@ -82,31 +64,27 @@
 <script>
 const axios = require('axios');
 import {Tabs, Tab} from 'vue-Tabs-component';
-import ChargerSocGraph from './ChargerSocGraph.vue';
+import ChargerPanel from './ChargerPanel.vue';
 
 export default {
   data() { return {
     activeCharger : {},
     chargers      : {},
-    chargerTabs   : [],
-    socOption     : {
-      animation             : 0,
-      backgroundBorderWidth : 15,
-      fontColor             : '#eee',
-      percentageTextSize    : 30,
-      percentageY           : 120,
-      textColor             : '#ccc'
-    }
+    chargerTabs   : []
   }},
   components : {
-    ChargerSocGraph,
+    ChargerPanel,
     Tab,
     Tabs
   },
-  methods : {},
+  methods : {
+    async fetchData() {
+      this.chargers = (await axios.get('/api/charger/list')).data.list;
+      this.activeCharger = (await axios.get('/api/user/activeCharger')).data.charger;
+    }
+  },
 	async created() {
-    this.activeCharger = (await axios.get('/api/user/activeCharger')).data.charger;
-    this.chargers = (await axios.get('/api/charger/list')).data.list;
+    await this.fetchData();
     this.chargerTabs = this.chargerTabs.concat(this.chargers.filter((val) => { return val.name === 'PowerCore 20100'; }));
     this.chargerTabs = this.chargerTabs.concat(this.chargers.filter((val) => { return val.name === 'PowerCore Fusion 5000'; }));
   }
