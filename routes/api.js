@@ -6,6 +6,7 @@ const SubacoModule = require('../models/subaco_module.model');
 const router = express.Router();
 router.use('/user', require('./api/user'));
 router.use('/charge', require('./api/charge'));
+router.use('/charger', require('./api/charger'));
 
 router.get('/', (req, res) => {
   const body = {
@@ -14,17 +15,6 @@ router.get('/', (req, res) => {
   };
   res.header('Content-Type', 'application/json; charset=utf-8');
   res.send(body);
-});
-
-router.get('/charger/list', async(req, res) => {
-  if(req.isUnauthenticated()) {
-    res.send({ ok : false, error : 'Not Authed' });
-    return;
-  }
-  res.header('Content-Type', 'application/json; charset=utf-8');
-  const list = await Charger.find({}).sort('-last_discharge')
-                            .catch((err) => { console.error(err); });
-  res.send({ ok : true, list });
 });
 
 router.get('/device/list', async(req, res) => {
