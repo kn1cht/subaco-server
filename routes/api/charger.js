@@ -33,4 +33,21 @@ router.get('/activate', async(req, res) => {
   res.header('Content-Type', 'application/json; charset=utf-8');
   res.send({ ok : true });
 });
+
+router.get('/setFull', async(req, res) => {
+  if(req.isUnauthenticated()) {
+    res.send({ ok : false, error : 'Not Authed' });
+    return;
+  }
+  if(!req.query.id) {
+    res.send({ ok : false, error : 'Please specify id parameter' });
+    return;
+  }
+  const charger = await Charger.findOne({ _id : req.query.id });
+  charger.residual = charger.capacity;
+  await charger.save().catch((err) => { console.error(err); });
+
+  res.header('Content-Type', 'application/json; charset=utf-8');
+  res.send({ ok : true });
+});
 module.exports = router;
