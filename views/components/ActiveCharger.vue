@@ -26,6 +26,7 @@
 .tabs-component {
   display: flex;
   flex-direction: column;
+  z-index: 2;
 }
 .tabs-component-tabs {
   display: flex;
