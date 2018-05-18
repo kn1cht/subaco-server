@@ -35,7 +35,7 @@ div.infobox {
   background-color: #001017;
   padding: 15px;
   flex: 2 0 auto;
-  width: 300px;
+  width: 320px;
 }
 div.infoline {
   flex: 1 0 auto;

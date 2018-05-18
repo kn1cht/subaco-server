@@ -4,6 +4,7 @@
     <p class="large">{{ charger.name || '名称不明' }}</p>
     <ChargerSocGraph
       v-if="charger.capacity"
+      :key="calcKey"
       :residual="charger.residual + 0"
       :capacity="charger.capacity + 0"
       :option="socOption"
@@ -61,6 +62,9 @@ export default {
   computed : {
     isActive() {
       return this.active._id === this.charger._id
+    },
+    calcKey() {
+      return `${this.charger._id}${Math.round(Math.random() * 1e6)}`;
     }
   },
   methods : {

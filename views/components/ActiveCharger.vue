@@ -70,7 +70,10 @@ export default {
   data() { return {
     activeCharger : {},
     chargers      : {},
-    chargerTabs   : []
+    chargerTabs   : [
+      { name : "left" }, // set dummy name to avoid rendering error
+      { name : "right" }
+    ]
   }},
   components : {
     ChargerPanel,
@@ -80,13 +83,13 @@ export default {
   methods : {
     async fetchCharger() {
       this.chargers = (await axios.get('/api/charger/list')).data.list;
+      this.chargerTabs[0] = (this.chargers.filter((val) => { return val.name === 'PowerCore 20100'; }))[0];
+      this.chargerTabs[1] = (this.chargers.filter((val) => { return val.name === 'PowerCore Fusion 5000'; }))[0];
       this.activeCharger = (await axios.get('/api/user/activeCharger')).data.charger;
     }
   },
 	async created() {
     await this.fetchCharger();
-    this.chargerTabs = this.chargerTabs.concat(this.chargers.filter((val) => { return val.name === 'PowerCore 20100'; }));
-    this.chargerTabs = this.chargerTabs.concat(this.chargers.filter((val) => { return val.name === 'PowerCore Fusion 5000'; }));
   }
 }
 </script>
