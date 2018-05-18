@@ -10,17 +10,28 @@
       :option="socOption"
     ></ChargerSocGraph>
     <p>推定残量</p>
-    <p class="large" style="float:left">{{ charger.residual.toFixed(0) }} / {{ charger.capacity }} mAh</p>
-    <button
-      v-if="isActive"
-      class="btn btn-primary"
-      disabled="disabled"
-    >使用中</button>
-    <button
-      v-else
-      @click="activateCharger"
-      class="btn btn-primary"
-    >使う</button>
+    <p class="large">{{ charger.residual.toFixed(0) }} / {{ charger.capacity }} mAh</p>
+    <p>
+      <button
+        v-if="isActive"
+        class="btn btn-primary"
+        disabled="disabled"
+      >使用中</button>
+      <button
+        v-else
+        @click="activateCharger"
+        class="btn btn-primary"
+      >使う</button>
+      <button
+        @click="chargerId=charger._id"
+        class="btn btn-default"
+      >100%に設定</button>
+    </p>
+    <ChargerSetFull
+      :chargerId="chargerId"
+      @close="chargerId=''"
+      @chargerSetFullDone="chargerId=''; $emit('chargerUpdated', charger._id)"
+    ></ChargerSetFull>
   </div>
 </template>
 
@@ -32,17 +43,16 @@ p {
 p.large {
   font-size: 30px;
 }
-button {
-  margin:5px 10px
-}
 </style>
 
 <script>
 const axios = require('axios');
+import ChargerSetFull from './ChargerSetFull.vue';
 import ChargerSocGraph from './ChargerSocGraph.vue';
 
 export default {
   data() { return {
+    chargerId : '',
     socOption : {
       animation             : 0,
       backgroundBorderWidth : 15,
@@ -53,6 +63,7 @@ export default {
     }
   }},
   components : {
+    ChargerSetFull,
     ChargerSocGraph
   },
   props : {
@@ -70,7 +81,7 @@ export default {
   methods : {
     activateCharger() {
       axios.get('/api/charger/activate', { params : { id : this.charger._id }});
-      this.$emit('chargerActivated', this.charger._id);
+      this.$emit('chargerUpdated', this.charger._id);
     }
   }
 }
