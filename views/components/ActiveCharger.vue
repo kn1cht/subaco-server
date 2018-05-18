@@ -1,10 +1,10 @@
 <template>
     <Tabs :options="{ useUrlFragment: false }">
       <Tab :name="chargerTabs[0].name">
-        <ChargerPanel v-if="activeCharger._id" :charger=chargerTabs[0] :active=activeCharger @chargerActivated="fetchData"></ChargerPanel>
+        <ChargerPanel v-if="activeCharger._id" :charger=chargerTabs[0] :active=activeCharger @chargerActivated="fetchCharger"></ChargerPanel>
       </Tab>
       <Tab :name="chargerTabs[1].name">
-        <ChargerPanel v-if="activeCharger._id" :charger=chargerTabs[1] :active=activeCharger @chargerActivated="fetchData"></ChargerPanel>
+        <ChargerPanel v-if="activeCharger._id" :charger=chargerTabs[1] :active=activeCharger @chargerActivated="fetchCharger"></ChargerPanel>
       </Tab>
     </Tabs>
 </template>
@@ -29,7 +29,7 @@
   font-weight: 600;
   list-style: none;
   transition: transform .3s ease;
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   z-index: 0;
 }
 .tabs-component-tab:hover {
@@ -38,7 +38,7 @@
 .tabs-component-tab.is-active {
   border-top: solid 1px #001017;
   color: #000;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   z-index: 2;
 }
 .tabs-component-tab-a {
@@ -63,7 +63,7 @@
 
 <script>
 const axios = require('axios');
-import {Tabs, Tab} from 'vue-Tabs-component';
+import {Tabs, Tab} from 'vue-tabs-component';
 import ChargerPanel from './ChargerPanel.vue';
 
 export default {
@@ -78,13 +78,13 @@ export default {
     Tabs
   },
   methods : {
-    async fetchData() {
+    async fetchCharger() {
       this.chargers = (await axios.get('/api/charger/list')).data.list;
       this.activeCharger = (await axios.get('/api/user/activeCharger')).data.charger;
     }
   },
 	async created() {
-    await this.fetchData();
+    await this.fetchCharger();
     this.chargerTabs = this.chargerTabs.concat(this.chargers.filter((val) => { return val.name === 'PowerCore 20100'; }));
     this.chargerTabs = this.chargerTabs.concat(this.chargers.filter((val) => { return val.name === 'PowerCore Fusion 5000'; }));
   }

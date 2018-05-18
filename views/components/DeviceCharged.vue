@@ -57,6 +57,11 @@ export default {
     calcSecDiff(t1, t2) {
       return Math.floor((new Date(t1) - new Date(t2)) / 1000);
     },
+    async fetchCharge() {
+		let res = await axios.get('/api/charge/list');
+    this.items = res.data.list;
+    this.latest = this.items[0];
+    },
     formatTimeDiff(secDiff) {
       if(secDiff < 0) { return 'error'; }
       let minDiff = Math.floor(secDiff / 60);
@@ -71,9 +76,7 @@ export default {
     }
   },
 	async created() {
-		let res = await axios.get('/api/charge/list');
-    this.items = res.data.list;
-    this.latest = this.items[0];
+    await this.fetchCharge();
   }
 }
 </script>

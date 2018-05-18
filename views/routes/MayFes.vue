@@ -2,31 +2,17 @@
   <section>
     <div class = "content">
       <div class="infobox">
-        <ActiveCharger></ActiveCharger>
+        <ActiveCharger ref="ActiveCharger"></ActiveCharger>
       </div>
       <div class="infoline">
       </div>
       <div class="infobox">
-        <div class="main-logo">
-          <img v-if="isCharging" src="../../static/logotype-withtext.png" alt="SUBACO logotype">
-          <img v-else src="../../static/logotype-withtext-disabled.png" alt="SUBACO logotype disabled">
-        </div>
-        <p>
-          {{ isCharging ? '充電中' : '待機中' }}
-        </p>
-        <p>
-          <small>経過時間</small><br>
-          {{ formatTimeDiff(elapsedTime) }}
-        </p>
-        <p>
-          <small>電流(平均)</small><br>
-          {{ currentmA }} mA
-        </p>
+        <MayFesMain :isCharging="isCharging" ref="MayFesMain"></MayFesMain>
       </div>
       <div class="infoline">
       </div>
       <div class="infobox">
-        <DeviceCharged></DeviceCharged>
+        <DeviceCharged ref="DeviceCharged"></DeviceCharged>
       </div>
     </div>
   </section>
@@ -38,17 +24,8 @@ section {
   background-color: #444;
   height: 100vh;
 }
-p {
-  font-size: 50px;
-}
-p small {
-  font-size: 30px;
-}
-.main-logo > img {
-  width: 100%
-}
 div.content {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -57,7 +34,7 @@ div.content {
 div.infobox {
   background-color: #001017;
   padding: 15px;
-  flex: 5 0 auto;
+  flex: 2 0 auto;
   width: 300px;
 }
 div.infoline {
@@ -73,74 +50,44 @@ const axios = require('axios');
 import ActiveCharger from '../components/ActiveCharger.vue';
 import DeviceCharged from '../components/DeviceCharged.vue';
 import UserName from '../components/UserName.vue';
+import MayFesMain from '../components/MayFesMain.vue';
 require('date-utils');
 
 export default {
   data() {
     return {
-      currentmA  : 0,
-      isCharging : false,
-      items      : [],
-      latest     : {},
-      nowTime    : 0,
+      interval   : undefined,
+      isCharging : false
     }
   },
   components : {
     ActiveCharger,
     DeviceCharged,
-    UserName
-  },
-  computed: {
-    elapsedTime() {
-      return Math.floor((this.nowTime - new Date(this.latest.start_time)) / 1000);
-    }
+    UserName,
+    MayFesMain
   },
   methods: {
-    formatTimeDiff(secDiff) {
-      if(secDiff < 0) { return 'error'; }
-      let minDiff = Math.floor(secDiff / 60);
-      secDiff -= minDiff * 60;
-      let hourDiff = Math.floor(minDiff / 60);
-      minDiff -= hourDiff * 60;
-      const dayDiff = Math.floor(hourDiff / 24);
-      hourDiff -= dayDiff * 24;
-      if(dayDiff === 0) { return `${hourDiff}:${minDiff}:${secDiff}`; }
-      else { return `${dayDiff}:${hourDiff}:${minDiff}:${secDiff}`; }
+    reloadChildComponentsData() {
+      this.$refs.MayFesMain.fetchLatestCharge();
+      this.$refs.MayFesMain.currentmA = 0;
+      this.$refs.DeviceCharged.fetchCharge();
+      this.$refs.ActiveCharger.fetchCharger();
+
     }
   },
 	async created() {
-    let res = await axios.get('/api/charge/list');
-    this.items = res.data.list;
-    this.latest = this.items[0];
-
-    let es = new EventSource('/api/user/isCharging/push');
+    const es = new EventSource('/api/user/isCharging/push');
     es.addEventListener('message', event => {
       this.isCharging = JSON.parse(event.data); // convert to Boolean
+      this.reloadChildComponentsData();
     }, false);
-
     this.isCharging = (await axios.get('/api/user/info')).data.is_charging;
-
-    const self = this;
-    (function timerLoop() {
-      self.nowTime = Math.floor(new Date);
-      requestAnimationFrame(timerLoop);
-    }());
-    (function currentAnimationLoop() {
-      const diff = self.latest.current.toFixed(0) - self.currentmA;
-      if(Math.abs(diff) > 0) {
-        const sign = diff / Math.abs(diff);
-        if(Math.abs(diff) > 100) {
-          self.currentmA += sign * 7 * 7;
-        }
-        else if(Math.abs(diff) > 50) {
-          self.currentmA += sign * 7;
-        }
-        else {
-          self.currentmA += sign;
-        }
-      }
-      requestAnimationFrame(currentAnimationLoop);
-    }());
+    this.interval = setInterval(() => {
+      this.reloadChildComponentsData();
+    }, 20000); // every 20 seconds
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   }
 }
 </script>
