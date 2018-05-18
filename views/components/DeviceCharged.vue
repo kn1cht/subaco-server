@@ -2,7 +2,7 @@
   <div>
     <p v-if="isCharging">{{ latest.device_id.manufacturer || '製造元不明' }}</p>
     <p v-else class="inactive">---</p>
-    <p v-if="isCharging" class="center">{{ latest.device_id.name || '名称不明' }}</p>
+    <p v-if="isCharging" class="center large">{{ latest.device_id.name || '名称不明' }}</p>
     <p v-else class="center inactive large">充電していません</p>
     <hr>
     <table class="table table-striped table-hover">

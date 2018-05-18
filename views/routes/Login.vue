@@ -21,11 +21,5 @@
         </div>
       </div>
     </form>
-
-    <h3 style="clear:both;">開発中環境用 テストユーザ</h3>
-    <p>
-      Id: <b>testuser</b><br>
-      Pass: <b>t3stUs3r</b>
-    </p>
   </section>
 </template>

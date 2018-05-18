@@ -72,8 +72,11 @@ export default {
       minDiff -= hourDiff * 60;
       const dayDiff = Math.floor(hourDiff / 24);
       hourDiff -= dayDiff * 24;
-      if(dayDiff === 0) { return `${hourDiff}:${minDiff}:${secDiff}`; }
-      else { return `${dayDiff}:${hourDiff}:${minDiff}:${secDiff}`; }
+      const fillByZero = (str) => {
+        return ('0'+ str).slice(-2);
+      }
+      if(dayDiff === 0) { return `${fillByZero(hourDiff)}:${fillByZero(minDiff)}:${fillByZero(secDiff)}`; }
+      else { return `${fillByZero(dayDiff)}:${fillByZero(hourDiff)}:${fillByZero(minDiff)}:${fillByZero(secDiff)}`; }
     }
   },
   computed: {
