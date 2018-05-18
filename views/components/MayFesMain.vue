@@ -8,11 +8,11 @@
     <p v-if="isCharging" class="center active">充電中</p>
     <p v-else class="center inactive">待機中</p>
     <p><small>経過時間</small></p>
-    <p v-if="isCharging" class="center">{{ formatTimeDiff(elapsedTime) }}</p>
-    <p v-else class="center inactive">--:--:--</p>
+    <p v-if="isCharging" class="ascii center">{{ formatTimeDiff(elapsedTime) }}</p>
+    <p v-else class="ascii center inactive">--:--:--</p>
     <p><small>電流(平均)</small></p>
-    <p v-if="isCharging" class="center">{{ currentmA }} mA</p>
-    <p v-else class="center inactive">-- mA</p>
+    <p v-if="isCharging" class="ascii center">{{ currentmA }} mA</p>
+    <p v-else class="ascii center inactive">-- mA</p>
   </div>
 </template>
 
@@ -26,6 +26,9 @@ p {
 }
 p small {
   font-size: 30px;
+}
+p.ascii {
+  font-family: 'Coda';
 }
 p.center {
   text-align: center;

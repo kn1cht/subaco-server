@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>{{ charger.manufacturer || '製造元不明' }}</p>
-    <p class="large">{{ charger.name || '名称不明' }}</p>
+    <p class="ascii">{{ charger.manufacturer || '製造元不明' }}</p>
+    <p class="ascii large" :class="{ active : isCharging }">{{ charger.name || '名称不明' }}</p>
     <ChargerSocGraph
       v-if="charger.capacity"
       :key="calcKey"
@@ -10,7 +10,7 @@
       :option="socOption"
     ></ChargerSocGraph>
     <p>推定残量</p>
-    <p class="large">{{ charger.residual.toFixed(0) }} / {{ charger.capacity }} mAh</p>
+    <p class="ascii large">{{ charger.residual.toFixed(0) }} / {{ charger.capacity }} mAh</p>
     <p>
       <button
         v-if="isActive"
@@ -38,10 +38,17 @@
 
 <style scoped>
 p {
-  font-size: 20px;
+  font-size: 25px;
+}
+p.ascii {
+  font-family: 'Coda';
+}
+p.active {
+  color: #93f233;
 }
 p.large {
   font-size: 30px;
+  font-weight: bold;
 }
 </style>
 
@@ -68,7 +75,11 @@ export default {
   },
   props : {
     active  : Object,
-    charger : Object
+    charger : Object,
+    isCharging : {
+      type : Boolean,
+      default : false
+    }
   },
   computed : {
     isActive() {

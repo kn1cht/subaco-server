@@ -1,10 +1,22 @@
 <template>
     <Tabs :options="{ useUrlFragment: false }">
       <Tab :name="chargerTabs[0].name">
-        <ChargerPanel v-if="activeCharger._id" :charger=chargerTabs[0] :active=activeCharger @chargerUpdated="fetchCharger"></ChargerPanel>
+        <ChargerPanel
+          v-if="activeCharger._id"
+          :charger=chargerTabs[0]
+          :active=activeCharger
+          :isCharging=isCharging
+          @chargerUpdated="fetchCharger"
+        ></ChargerPanel>
       </Tab>
       <Tab :name="chargerTabs[1].name">
-        <ChargerPanel v-if="activeCharger._id" :charger=chargerTabs[1] :active=activeCharger @chargerUpdated="fetchCharger"></ChargerPanel>
+        <ChargerPanel
+          v-if="activeCharger._id"
+          :charger=chargerTabs[1]
+          :active=activeCharger
+          :isCharging=isCharging
+          @chargerUpdated="fetchCharger"
+        ></ChargerPanel>
       </Tab>
     </Tabs>
 </template>
@@ -75,6 +87,12 @@ export default {
       { name : "right" }
     ]
   }},
+  props : {
+    isCharging : {
+      type : Boolean,
+      default : false
+    }
+  },
   components : {
     ChargerPanel,
     Tab,

@@ -2,7 +2,7 @@
   <div>
     <p v-if="isCharging">{{ latest.device_id.manufacturer || '製造元不明' }}</p>
     <p v-else class="inactive">---</p>
-    <p v-if="isCharging" class="center large">{{ latest.device_id.name || '名称不明' }}</p>
+    <p v-if="isCharging" class="center large active">{{ latest.device_id.name || '名称不明' }}</p>
     <p v-else class="center inactive large">充電していません</p>
     <hr>
     <table class="table table-striped table-hover">
@@ -27,10 +27,12 @@ div {
   padding: 14px;
 }
 p {
-  font-size: 20px;
+  font-family: 'Coda';
+  font-size: 25px;
 }
 p.large {
   font-size: 30px;
+  font-weight: bold;
 }
 p.center {
   text-align: center;

@@ -2,7 +2,7 @@
   <section>
     <div class = "content">
       <div class="info-box">
-        <ActiveCharger ref="ActiveCharger"></ActiveCharger>
+        <ActiveCharger :isCharging="isCharging" ref="ActiveCharger"></ActiveCharger>
       </div>
       <div class="info-line">
         <ChargeLine :isCharging="isCharging"></ChargeLine>
@@ -21,6 +21,8 @@
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Coda');
+
 section {
   color: white;
   background-color: #444;
