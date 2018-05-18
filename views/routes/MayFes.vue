@@ -12,7 +12,7 @@
       <div class="infoline">
       </div>
       <div class="infobox">
-        <DeviceCharged ref="DeviceCharged"></DeviceCharged>
+        <DeviceCharged :isCharging="isCharging" ref="DeviceCharged"></DeviceCharged>
       </div>
     </div>
   </section>

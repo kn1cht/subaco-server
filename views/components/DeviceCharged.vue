@@ -1,7 +1,9 @@
 <template>
   <div>
-    <p>{{ latest.device_id.manufacturer || '製造元不明' }}</p>
-    <p class="large">{{ latest.device_id.name || '名称不明' }}</p>
+    <p v-if="isCharging">{{ latest.device_id.manufacturer || '製造元不明' }}</p>
+    <p v-else class="inactive">---</p>
+    <p v-if="isCharging" class="center">{{ latest.device_id.name || '名称不明' }}</p>
+    <p v-else class="center inactive large">充電していません</p>
     <hr>
     <table class="table table-striped table-hover">
       <thead>
@@ -10,7 +12,7 @@
       </tr>
       </thead>
       <tbody>
-        <tr v-for="item in items.slice(0, 8)" :key="item._id">
+        <tr v-for="item in itemsOnHistory" :key="item._id">
           <td>{{ item.device_id.name }}</td>
           <td>{{ formatTimeDiff(calcSecDiff(item.update_time, item.start_time)) }}</td>
         </tr>
@@ -29,6 +31,15 @@ p {
 }
 p.large {
   font-size: 30px;
+}
+p.center {
+  text-align: center;
+}
+p.active {
+  color: #93f233;
+}
+p.inactive {
+  color: #7e8d6f;
 }
 table {
   font-size: 18px;
@@ -53,7 +64,23 @@ export default {
       latest : {}
     }
   },
-  methods: {
+  props : {
+    isCharging : {
+      type    : Boolean,
+      default : false
+    }
+  },
+  computed : {
+    itemsOnHistory() {
+      if(!this.items[0] || this.items[0].state === 0) {
+        return this.items.slice(0, 8);
+      }
+      else {
+        return this.items.slice(1, 9);
+      }
+    }
+  },
+  methods : {
     calcSecDiff(t1, t2) {
       return Math.floor((new Date(t1) - new Date(t2)) / 1000);
     },
