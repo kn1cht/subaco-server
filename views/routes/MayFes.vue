@@ -1,17 +1,19 @@
 <template>
   <section>
     <div class = "content">
-      <div class="infobox">
+      <div class="info-box">
         <ActiveCharger ref="ActiveCharger"></ActiveCharger>
       </div>
-      <div class="infoline">
+      <div class="info-line">
+        <ChargeLine :isCharging="isCharging"></ChargeLine>
       </div>
-      <div class="infobox">
+      <div class="info-box">
         <MayFesMain :isCharging="isCharging" ref="MayFesMain"></MayFesMain>
       </div>
-      <div class="infoline">
+      <div class="info-line">
+        <ChargeLine :isCharging="isCharging"></ChargeLine>
       </div>
-      <div class="infobox">
+      <div class="info-box">
         <DeviceCharged :isCharging="isCharging" ref="DeviceCharged"></DeviceCharged>
       </div>
     </div>
@@ -31,13 +33,14 @@ div.content {
   justify-content: space-around;
   padding: 3vw;
 }
-div.infobox {
+div.info-box {
   background-color: #001017;
   padding: 15px;
   flex: 2 0 auto;
   width: 320px;
+  z-index: 1;
 }
-div.infoline {
+div.info-line {
   flex: 1 0 auto;
 }
 .fade-enter-active, .fade-leave-active {
@@ -48,6 +51,7 @@ div.infoline {
 <script>
 const axios = require('axios');
 import ActiveCharger from '../components/ActiveCharger.vue';
+import ChargeLine from '../components/ChargeLine.vue';
 import DeviceCharged from '../components/DeviceCharged.vue';
 import UserName from '../components/UserName.vue';
 import MayFesMain from '../components/MayFesMain.vue';
@@ -62,6 +66,7 @@ export default {
   },
   components : {
     ActiveCharger,
+    ChargeLine,
     DeviceCharged,
     UserName,
     MayFesMain
