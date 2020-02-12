@@ -10,7 +10,7 @@ const router = express.Router();
 
 const findSubacoModuleFromToken = (token) => {
   return SubacoModule.findOne({ token }).catch((err) => { console.error(err); });
-}
+};
 
 router.get('/list', async(req, res) => {
   if(req.isUnauthenticated()) {

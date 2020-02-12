@@ -11,7 +11,7 @@ router.get('/list', async(req, res) => {
   }
   res.header('Content-Type', 'application/json; charset=utf-8');
   const list = await Charger.find({}).sort('-last_discharge')
-                            .catch((err) => { console.error(err); });
+    .catch((err) => { console.error(err); });
   res.send({ ok : true, list });
 });
 
@@ -26,7 +26,7 @@ router.get('/activate', async(req, res) => {
   }
   await User.update({
     _id : req.user._id
-  }, { $set: {
+  }, { $set : {
     active_charger_id : req.query.id
   }});
 

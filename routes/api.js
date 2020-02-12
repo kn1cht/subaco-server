@@ -1,5 +1,4 @@
 const express = require('express');
-const Charger = require('../models/charger.model');
 const Device = require('../models/device.model');
 const SubacoModule = require('../models/subaco_module.model');
 
@@ -24,7 +23,7 @@ router.get('/device/list', async(req, res) => {
   }
   res.header('Content-Type', 'application/json; charset=utf-8');
   const list = await Device.find({}).sort('-last_charge')
-                            .catch((err) => { console.error(err); });
+    .catch((err) => { console.error(err); });
   res.send({ ok : true, list });
 });
 
@@ -35,7 +34,7 @@ router.get('/module/list', async(req, res) => {
   }
   res.header('Content-Type', 'application/json; charset=utf-8');
   const list = await SubacoModule.find({}).sort('-last_charge')
-                            .catch((err) => { console.error(err); });
+    .catch((err) => { console.error(err); });
   res.send({ ok : true, list });
 });
 

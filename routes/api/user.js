@@ -57,7 +57,7 @@ router.get('/isCharging/push', async(req, res) => {
 
   req.on('close', () => {
     cursor.destroy();
-    console.log("Connection closed.");
+    console.log('Connection closed.');
   });
 });
 

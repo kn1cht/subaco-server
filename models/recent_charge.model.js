@@ -15,7 +15,7 @@ const recentChargeSchema = new Schema({
     required : true
   }
 }, {
-  capped: 1048576 // = 1 MB
+  capped : 1048576 // = 1 MB
 });
 
 mongoose.Promise = global.Promise; // set global Promise

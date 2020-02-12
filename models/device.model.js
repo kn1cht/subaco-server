@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const DeviceSchema = new Schema({
-  manufacturer   : String,
-  name           : String,
-  serial         : String,
-  last_charge    : Date,
-  user_id        : {
+  manufacturer : String,
+  name         : String,
+  serial       : String,
+  last_charge  : Date,
+  user_id      : {
     type : Schema.Types.ObjectId,
     ref  : 'User'
   },
